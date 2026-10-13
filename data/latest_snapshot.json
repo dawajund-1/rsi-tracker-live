@@ -1,6 +1,6 @@
 {
-  "generated_at_utc": "2026-10-13T20:16:58Z",
-  "prices_live": false,
+  "generated_at_utc": "2026-10-13T23:41:39Z",
+  "prices_live": true,
   "tickers": [
     {
       "ticker": "AAPL",
@@ -10,7 +10,7 @@
       "ema9": null,
       "ema21": null,
       "trend": "FLAT",
-      "signal": "NONE",
+      "signal": "SELL ZONE",
       "early_warning": "NONE"
     },
     {
@@ -21,7 +21,7 @@
       "ema9": null,
       "ema21": null,
       "trend": "FLAT",
-      "signal": "NONE",
+      "signal": "SELL ZONE",
       "early_warning": "NONE"
     },
     {
@@ -42,8 +42,8 @@
       "rsi": 28.33,
       "ema9": null,
       "ema21": null,
-      "trend": "FLAT",
-      "signal": "BUY",
+      "trend": "LONG",
+      "signal": "BUY ZONE",
       "early_warning": "NONE"
     },
     {
@@ -65,7 +65,7 @@
       "ema9": null,
       "ema21": null,
       "trend": "FLAT",
-      "signal": "NONE",
+      "signal": "SELL ZONE",
       "early_warning": "NONE"
     },
     {
@@ -76,7 +76,7 @@
       "ema9": null,
       "ema21": null,
       "trend": "FLAT",
-      "signal": "NONE",
+      "signal": "SELL ZONE",
       "early_warning": "NONE"
     },
     {
