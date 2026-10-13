@@ -10,14 +10,6 @@
     "AMD": "FLAT"
   },
   "open_position": null,
-  "bar_guard": {
-    "bar_id": "2026-10-12",
-    "decided": true,
-    "exit_done": false,
-    "entry_done": false,
-    "closed": [],
-    "opened": []
-  },
   "portfolio": {
     "balance_usd": 266.6667,
     "realized_pl_usd": 0,
@@ -32,5 +24,13 @@
     "GOOGL": "NONE",
     "META": "NONE",
     "AMD": "NONE"
+  },
+  "bar_guard": {
+    "bar_id": "2026-10-12",
+    "decided": true,
+    "exit_done": false,
+    "entry_done": false,
+    "closed": [],
+    "opened": []
   }
 }

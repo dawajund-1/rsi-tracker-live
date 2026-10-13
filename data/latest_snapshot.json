@@ -1,0 +1,135 @@
+{
+  "generated_at_utc": "2026-10-13T10:18:22Z",
+  "tickers": [
+    {
+      "ticker": "AAPL",
+      "strategy": "rsi_revert",
+      "price": 340.97,
+      "rsi": 74.65,
+      "ema9": null,
+      "ema21": null,
+      "trend": "FLAT",
+      "signal": "NONE",
+      "early_warning": "NONE"
+    },
+    {
+      "ticker": "MSFT",
+      "strategy": "rsi_revert",
+      "price": 541.15,
+      "rsi": 87.83,
+      "ema9": null,
+      "ema21": null,
+      "trend": "FLAT",
+      "signal": "NONE",
+      "early_warning": "NONE"
+    },
+    {
+      "ticker": "NVDA",
+      "strategy": "rsi_revert",
+      "price": 226.32,
+      "rsi": 4.36,
+      "ema9": null,
+      "ema21": null,
+      "trend": "FLAT",
+      "signal": "BUY",
+      "early_warning": "NONE"
+    },
+    {
+      "ticker": "TSLA",
+      "strategy": "rsi_revert",
+      "price": 378.03,
+      "rsi": 43.8,
+      "ema9": null,
+      "ema21": null,
+      "trend": "FLAT",
+      "signal": "NONE",
+      "early_warning": "NONE"
+    },
+    {
+      "ticker": "AMZN",
+      "strategy": "rsi_revert",
+      "price": 259.53,
+      "rsi": 53.34,
+      "ema9": null,
+      "ema21": null,
+      "trend": "FLAT",
+      "signal": "NONE",
+      "early_warning": "NONE"
+    },
+    {
+      "ticker": "GOOGL",
+      "strategy": "rsi_revert",
+      "price": 352.72,
+      "rsi": 84.76,
+      "ema9": null,
+      "ema21": null,
+      "trend": "FLAT",
+      "signal": "NONE",
+      "early_warning": "NONE"
+    },
+    {
+      "ticker": "META",
+      "strategy": "rsi_revert",
+      "price": 742.96,
+      "rsi": 87.02,
+      "ema9": null,
+      "ema21": null,
+      "trend": "FLAT",
+      "signal": "NONE",
+      "early_warning": "NONE"
+    },
+    {
+      "ticker": "AMD",
+      "strategy": "rsi_revert",
+      "price": 594.24,
+      "rsi": 5.08,
+      "ema9": null,
+      "ema21": null,
+      "trend": "FLAT",
+      "signal": "BUY",
+      "early_warning": "NONE"
+    }
+  ],
+  "open_position": null,
+  "portfolio": {
+    "balance_usd": 266.6667,
+    "balance_sar": 1000.0,
+    "realized_pl_usd": 0,
+    "purified_total_usd": 0
+  },
+  "real_account": {
+    "start_sar": 500.0,
+    "cash_usd": 133.3333,
+    "position": null,
+    "realized_pl_usd": 0.0,
+    "purified_usd": 0.0,
+    "pending": []
+  },
+  "config": {
+    "watchlist": [
+      "AAPL",
+      "MSFT",
+      "NVDA",
+      "TSLA",
+      "AMZN",
+      "GOOGL",
+      "META",
+      "AMD"
+    ],
+    "purification_pct": 0.1
+  },
+  "integrity": {
+    "pl_provisional": false,
+    "provisional_reason": "",
+    "bar_guard": {
+      "bar_id": "2026-10-12",
+      "decided": true,
+      "exit_done": false,
+      "entry_done": false,
+      "closed": [],
+      "opened": []
+    },
+    "outbox_pending": 0,
+    "outbox_needs_review": 0
+  }
+}
