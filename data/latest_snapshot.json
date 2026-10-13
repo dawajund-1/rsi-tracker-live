@@ -1,12 +1,12 @@
 {
-  "generated_at_utc": "2026-10-13T17:46:10Z",
+  "generated_at_utc": "2026-10-13T18:46:42Z",
   "prices_live": true,
   "tickers": [
     {
       "ticker": "AAPL",
       "strategy": "rsi_revert",
-      "price": 342.92,
-      "rsi": 83.16,
+      "price": 342.4158,
+      "rsi": 81.56,
       "ema9": null,
       "ema21": null,
       "trend": "FLAT",
@@ -16,8 +16,8 @@
     {
       "ticker": "MSFT",
       "strategy": "rsi_revert",
-      "price": 546.7138,
-      "rsi": 93.06,
+      "price": 545.73,
+      "rsi": 92.49,
       "ema9": null,
       "ema21": null,
       "trend": "FLAT",
@@ -27,8 +27,8 @@
     {
       "ticker": "NVDA",
       "strategy": "rsi_revert",
-      "price": 227.11,
-      "rsi": 24.88,
+      "price": 226.945,
+      "rsi": 21.36,
       "ema9": null,
       "ema21": null,
       "trend": "FLAT",
@@ -38,8 +38,8 @@
     {
       "ticker": "TSLA",
       "strategy": "rsi_revert",
-      "price": 374.95,
-      "rsi": 27.37,
+      "price": 373.57,
+      "rsi": 23.43,
       "ema9": null,
       "ema21": null,
       "trend": "FLAT",
@@ -49,8 +49,8 @@
     {
       "ticker": "AMZN",
       "strategy": "rsi_revert",
-      "price": 259.895,
-      "rsi": 56.7,
+      "price": 259.04,
+      "rsi": 48.3,
       "ema9": null,
       "ema21": null,
       "trend": "FLAT",
@@ -60,8 +60,8 @@
     {
       "ticker": "GOOGL",
       "strategy": "rsi_revert",
-      "price": 354.64,
-      "rsi": 92.25,
+      "price": 353.75,
+      "rsi": 89.97,
       "ema9": null,
       "ema21": null,
       "trend": "FLAT",
@@ -71,8 +71,8 @@
     {
       "ticker": "META",
       "strategy": "rsi_revert",
-      "price": 763.38,
-      "rsi": 94.66,
+      "price": 762.93,
+      "rsi": 94.59,
       "ema9": null,
       "ema21": null,
       "trend": "FLAT",
@@ -82,8 +82,8 @@
     {
       "ticker": "AMD",
       "strategy": "rsi_revert",
-      "price": 597.115,
-      "rsi": 21.05,
+      "price": 595.95,
+      "rsi": 15.27,
       "ema9": null,
       "ema21": null,
       "trend": "FLAT",
