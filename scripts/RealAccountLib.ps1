@@ -170,11 +170,19 @@ function Get-NtfyReplies {
         Write-Warning "replies: could not read ntfy - $($_.Exception.Message)"
         return @()
     }
+    # ntfy answers as application/x-ndjson, which PowerShell hands back as raw
+    # bytes rather than text - decode explicitly or every reply is missed.
+    $text = if ($raw.Content -is [byte[]]) { [System.Text.Encoding]::UTF8.GetString($raw.Content) } else { [string]$raw.Content }
     $out = @()
-    foreach ($line in ($raw.Content -split "`n")) {
+    $all = 0
+    foreach ($line in ($text -split "`n")) {
         if (-not $line.Trim()) { continue }
         try { $m = $line | ConvertFrom-Json } catch { continue }
+        if ($m.event -eq "message") { $all++ }
         if ($m.event -eq "message" -and -not $m.title -and $m.message) { $out += $m }
+    }
+    if ($env:GITHUB_ACTIONS -eq "true") {
+        Write-Host "::notice title=replies::ntfy returned $all message(s) in the last 12 h; $($out.Count) typed by the owner"
     }
     return @($out | Sort-Object time)
 }
