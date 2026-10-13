@@ -1,0 +1,29 @@
+name: Live refresh (dashboard)
+
+# Live prices + RSI for the dashboard during US market hours, and the owner's
+# ntfy replies. No trading decision, no BUY/SELL alert. Started on time by a
+# scheduled task each hour; this cron is a backup (GitHub may run it late).
+# 13:07-21:37 UTC covers the session in both summer and winter.
+
+on:
+  schedule:
+    - cron: "7,37 13-21 * * 1-5"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: refresh
+  cancel-in-progress: true
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Refresh
+        shell: pwsh
+        env:
+          NTFY_TOPIC_US: ${{ secrets.NTFY_TOPIC_US }}
+        run: ./scripts/Get-Refresh.ps1

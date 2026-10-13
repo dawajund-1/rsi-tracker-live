@@ -670,10 +670,21 @@ function tickClock() {
   const el = document.getElementById("live-clock");
   if (!el) return;
   if (!LIVE_PRICES_ENABLED) {
+    // Prices are refreshed server-side (no key in this public page): about
+    // every 30-60 minutes while the US market is open, plus 22:30 and the close.
     const at = lastSnapshot && lastSnapshot.generated_at_utc;
-    el.textContent = at
-      ? `Showing the close from the last completed bar — ${saDateTime(new Date(at))}`
-      : "Showing the close from the last completed bar";
+    if (!at) { el.textContent = "Loading prices…"; return; }
+    const d = new Date(at);
+    const mins = Math.round((Date.now() - d.getTime()) / 60000);
+    const ago = mins < 1 ? "just now" : mins < 60 ? `${mins} min ago` : `${Math.floor(mins/60)} h ${mins%60} min ago`;
+    const ny = new Intl.DateTimeFormat("en-US", { timeZone: "America/New_York", weekday: "short",
+                 hour: "numeric", minute: "numeric", hour12: false }).formatToParts(new Date());
+    const g = k => (ny.find(p => p.type === k) || {}).value;
+    const hm = Number(g("hour")) * 60 + Number(g("minute"));
+    const open = !["Sat", "Sun"].includes(g("weekday")) && hm >= 570 && hm < 960;
+    el.textContent = (open && lastSnapshot.prices_live ? "Live market prices" : "Latest prices") +
+      ` — updated ${saDateTime(d)} (${ago})` +
+      (open ? " · market OPEN, refreshes about every 30–60 min" : " · market closed");
     return;
   }
   if (!lastLiveFetchAt) {

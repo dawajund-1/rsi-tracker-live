@@ -86,6 +86,39 @@ function Get-RealAlertText {
             "RSI $([math]::Round($Rsi,1)) (buy level $($Cfg.live.rsi_buy_below)). Reply 'done' or 'bought <price>' when bought, or 'skip'.")
 }
 
+function Get-LiveMarket {
+    # Live price and RSI per watchlist ticker, INCLUDING today's still-forming
+    # bar. For display and the pre-close preview only - never for trading.
+    param($Cfg)
+    $live = $Cfg.live
+    $rsi = @{}; $px = @{}; $barId = @{}
+    foreach ($t in $Cfg.watchlist) {
+        try {
+            $bars = Get-HourlyBars -Ticker $t -Interval $live.interval -Range $live.range
+            if (-not $bars -or $bars.Count -lt ([int]$live.rsi_period + 2)) { continue }
+            $r = Get-RsiLast -Closes $bars.close -Period ([int]$live.rsi_period)
+            if ($null -ne $r) { $rsi[$t] = $r; $px[$t] = $bars[-1].close; $barId[$t] = Get-BarId -Bars $bars }
+        } catch {
+            Write-Warning "live: $t failed - $($_.Exception.Message)"
+        }
+    }
+    return @{ Rsi = $rsi; Px = $px; BarId = $barId }
+}
+
+function Write-LiveSnapshot {
+    # Dashboard refresh with live prices. Touches only latest_snapshot.json.
+    param($Cfg, $State, [hashtable]$Rsi, [hashtable]$Px)
+    $buy = [double]$Cfg.live.rsi_buy_below; $sell = [double]$Cfg.live.rsi_exit_above
+    $rows = @(foreach ($t in $Cfg.watchlist) {
+        if (-not $Px.ContainsKey($t)) { continue }
+        $zone = if ($Rsi[$t] -lt $buy) { "BUY ZONE" } elseif ($Rsi[$t] -gt $sell) { "SELL ZONE" } else { "NONE" }
+        [pscustomobject]@{ ticker = $t; strategy = "rsi_revert"; price = [math]::Round($Px[$t], 4)
+            rsi = [math]::Round($Rsi[$t], 2); ema9 = $null; ema21 = $null
+            trend = $State.ticker_state.$t; signal = $zone; early_warning = "NONE" }
+    })
+    Write-Snapshot -Tickers $rows -State $State -Cfg $Cfg -Live
+}
+
 function Invoke-PreClosePreview {
     # Runs the preview end to end for the owner's REAL account (the practice
     # account needs no alert - it trades by itself after the close).
@@ -99,21 +132,13 @@ function Invoke-PreClosePreview {
     $closeUtc = Get-SessionCloseUtc -SessionDate $nyDate -TimeZoneId $tzId -CloseLocal $closeLoc
     $closeRiyadh = Get-RiyadhClock -Utc $closeUtc
 
+    $m = Get-LiveMarket -Cfg $Cfg
+    # Today's bar must exist and still be forming. No bar for today means a
+    # market holiday: say nothing.
     $rsi = @{}; $px = @{}
-    foreach ($t in $Cfg.watchlist) {
-        try {
-            $bars = Get-HourlyBars -Ticker $t -Interval $live.interval -Range $live.range
-            if (-not $bars -or $bars.Count -lt ([int]$live.rsi_period + 2)) { continue }
-            # Today's bar must exist and still be forming. No bar for today means
-            # a market holiday: say nothing.
-            if ((Get-BarId -Bars $bars) -ne $todayId) { continue }
-            $r = Get-RsiLast -Closes $bars.close -Period ([int]$live.rsi_period)
-            if ($null -ne $r) { $rsi[$t] = $r; $px[$t] = $bars[-1].close }
-        } catch {
-            Write-Warning "preclose: $t failed - $($_.Exception.Message)"
-        }
-    }
+    foreach ($t in $m.Rsi.Keys) { if ($m.BarId[$t] -eq $todayId) { $rsi[$t] = $m.Rsi[$t]; $px[$t] = $m.Px[$t] } }
     if ($rsi.Count -eq 0) { Write-Host "preclose: no bar for today ($todayId); market closed or data missing."; return }
+    Write-LiveSnapshot -Cfg $Cfg -State $State -Rsi $rsi -Px $px
 
     $real = Read-RealState -Cfg $Cfg
     $held = if ($real.position) { [string]$real.position.ticker } else { $null }
@@ -121,6 +146,7 @@ function Invoke-PreClosePreview {
             -BuyBelow ([double]$live.rsi_buy_below) -ExitAbove ([double]$live.rsi_exit_above)
     if (-not $d.Sell -and -not $d.Buy) {
         Write-Host "preclose: no trade expected at today's close; nothing sent."
+        Publish-DataCommit "Live prices $todayId" | Out-Null
         return
     }
     $when = "before the close at $closeRiyadh Riyadh time"

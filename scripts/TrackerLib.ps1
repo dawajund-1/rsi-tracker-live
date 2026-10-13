@@ -219,10 +219,12 @@ function Append-Csv {
 }
 
 function Write-Snapshot {
-    param([pscustomobject]$Tickers, [pscustomobject]$State, [pscustomobject]$Cfg)
+    # -Live: prices are from the still-open session (a refresh, not a decision).
+    param([pscustomobject]$Tickers, [pscustomobject]$State, [pscustomobject]$Cfg, [switch]$Live)
     $balanceUsd = $State.portfolio.balance_usd
     $snapshot = [pscustomobject]@{
         generated_at_utc = (Get-Date).ToUniversalTime().ToString("s") + "Z"
+        prices_live      = [bool]$Live
         tickers          = $Tickers
         open_position    = $State.open_position
         portfolio        = [pscustomobject]@{
