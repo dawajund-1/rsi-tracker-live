@@ -1,0 +1,36 @@
+{
+  "ticker_state": {
+    "AAPL": "FLAT",
+    "MSFT": "FLAT",
+    "NVDA": "FLAT",
+    "TSLA": "FLAT",
+    "AMZN": "FLAT",
+    "GOOGL": "FLAT",
+    "META": "FLAT",
+    "AMD": "FLAT"
+  },
+  "open_position": null,
+  "bar_guard": {
+    "bar_id": "2026-10-12",
+    "decided": true,
+    "exit_done": false,
+    "entry_done": false,
+    "closed": [],
+    "opened": []
+  },
+  "portfolio": {
+    "balance_usd": 266.6667,
+    "realized_pl_usd": 0,
+    "purified_total_usd": 0
+  },
+  "warning_state": {
+    "AAPL": "NONE",
+    "MSFT": "NONE",
+    "NVDA": "NONE",
+    "TSLA": "NONE",
+    "AMZN": "NONE",
+    "GOOGL": "NONE",
+    "META": "NONE",
+    "AMD": "NONE"
+  }
+}
