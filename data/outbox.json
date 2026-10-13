@@ -3,22 +3,22 @@
     "id": "REPLY:BVtbTbY9dp3n",
     "title": "Your account",
     "message": "Not recorded. There is no open alert to confirm. | Balance about SAR 500 (all cash)",
-    "status": "sending",
+    "status": "sent",
     "attempts": 1,
     "created_utc": "2026-10-13T10:51:10Z",
     "claimed_utc": "2026-10-13T10:51:12Z",
-    "sent_utc": null,
+    "sent_utc": "2026-10-13T10:51:13Z",
     "last_error": null
   },
   {
     "id": "REPLY:xnVM4csmKsKq",
     "title": "Your account",
     "message": "Not recorded. There is no open alert to confirm. | Balance about SAR 500 (all cash)",
-    "status": "sending",
+    "status": "sent",
     "attempts": 1,
     "created_utc": "2026-10-13T10:51:10Z",
     "claimed_utc": "2026-10-13T10:51:12Z",
-    "sent_utc": null,
+    "sent_utc": "2026-10-13T10:51:13Z",
     "last_error": null
   }
 ]
