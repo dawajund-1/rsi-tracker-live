@@ -3,13 +3,18 @@
     "AAPL": "FLAT",
     "MSFT": "FLAT",
     "NVDA": "FLAT",
-    "TSLA": "FLAT",
+    "TSLA": "LONG",
     "AMZN": "FLAT",
     "GOOGL": "FLAT",
     "META": "FLAT",
     "AMD": "FLAT"
   },
-  "open_position": null,
+  "open_position": {
+    "ticker": "TSLA",
+    "entry_price": 375.23,
+    "entry_time": "2026-10-13T20:16:56Z",
+    "shares": 0.710675
+  },
   "portfolio": {
     "balance_usd": 266.6667,
     "realized_pl_usd": 0,
@@ -26,11 +31,13 @@
     "AMD": "NONE"
   },
   "bar_guard": {
-    "bar_id": "2026-10-12",
+    "bar_id": "2026-10-13",
     "decided": true,
     "exit_done": false,
-    "entry_done": false,
+    "entry_done": true,
     "closed": [],
-    "opened": []
+    "opened": [
+      "TSLA"
+    ]
   }
 }
