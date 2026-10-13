@@ -21,6 +21,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Check the alert channel setting (never prints it)
+        env:
+          NTFY_TOPIC_US: ${{ secrets.NTFY_TOPIC_US }}
+        run: |
+          if [ -z "$NTFY_TOPIC_US" ]; then echo "::warning title=health::NTFY_TOPIC_US secret is NOT set"; else echo "::notice title=health::NTFY_TOPIC_US secret is set (${#NTFY_TOPIC_US} chars)"; fi
       - name: Read replies
         shell: pwsh
         env:
