@@ -1,0 +1,48 @@
+{
+  "watchlist": [
+    "AAPL",
+    "MSFT",
+    "NVDA",
+    "TSLA",
+    "AMZN",
+    "GOOGL",
+    "META",
+    "AMD"
+  ],
+  "interval": "5m",
+  "range": "5d",
+  "ema_fast": 9,
+  "ema_slow": 21,
+  "purification_pct": 0.1,
+  "starting_capital_sar": 1000,
+  "sar_per_usd": 3.75,
+  "live": {
+    "strategy": "rsi_revert",
+    "interval": "1d",
+    "range": "1y",
+    "rsi_period": 2,
+    "rsi_buy_below": 30,
+    "rsi_exit_above": 70,
+    "market_timezone": "America/New_York",
+    "market_close_local": "16:00",
+    "close_settle_minutes": 10
+  },
+  "live_notes": "live.strategy selects the rule Get-Signals.ps1 actually trades. 'rsi_revert' is RSI(2) mean reversion on DAILY bars: buy when RSI closes below rsi_buy_below, sell when it closes above rsi_exit_above. It is the only configuration tested in this project that beat a matched random control after correcting for multiple testing (p=0.03, US large caps 2000-2013). Set live.strategy to 'ema_cross' to restore the previous EMA9/21 behaviour, which uses the top-level interval/range/ema_fast/ema_slow values instead. market_timezone + market_close_local say when the US session ends on New York's own clock (16:00 ET), so the close is 20:00 UTC in summer and 21:00 UTC in winter with no table to maintain; close_settle_minutes waits that long past the bell for the official closing price. Until then the day's still-forming bar is discarded so the rule only ever acts on closed bars. WARNINGS: the same rule measured on 5m bars for this exact watchlist came out WORSE THAN RANDOM and loss-making even at zero cost, and on Tadawul it ranked 14th of 15 with NEGATIVE per-trade expectancy -- which is why the Saudi tracker deliberately still runs ema_cross. Do not copy this block into config-sa.json.",
+  "pl_provisional": false,
+  "pl_provisional_reason": "",
+  "notes": "Copy of dawajund-1/intraday-sar-tracker (the original is not touched by this repo). starting_capital_sar is the PRACTICE account (trades automatically, no alerts). real_account.starting_sar is the owner's real money: alerts are sized to it and only confirmed trades are recorded. purification_pct is the share of each realized profit set aside (0.1 = 10%). sar_per_usd is SAR's fixed peg. Watchlist and rule kept identical to the original after the PLAN.md study (results/study.json): the 'top 10' list failed its check and no loss-control variant beat the base rule.",
+  "notifications": {
+    "timezone": "Asia/Riyadh",
+    "utc_offset_hours": 3,
+    "deliver_from_local": "07:00",
+    "deliver_until_local": "01:30",
+    "note": "When the phone may ring. BUY/SELL alerts go out WHILE THE MARKET IS OPEN, about 30 minutes before the close (22:30 Riyadh in summer, 23:30 in winter): a dispatch at 15:28 New York runs Get-Signals.ps1 inside the pre-close window (preclose_window_minutes before the close), which previews the decision on the current price and pushes it without trading. The paper account still trades only on the real close, in the post-close run at 16:15 New York; that run pushes a trade only if the pre-close alert did not predict it, and the daily summary follows right after and lists any alert that did not happen. Delivery window 07:00 -> 01:30 Riyadh (crosses midnight); anything produced between 01:30 and 07:00 - i.e. GitHub's late backup cron - is held by ntfy via its 'At' header until deliver_from_local. Riyadh is UTC+3 year round, so the fixed offset is exact.",
+    "preclose_alerts": true,
+    "preclose_window_minutes": 60
+  },
+  "real_account": {
+    "starting_sar": 500,
+    "note": "The owner's own money. Only trades he confirms by replying in the ntfy app are recorded (see scripts/RealAccountLib.ps1). The 1,000 SAR practice account (starting_capital_sar) trades by itself."
+  },
+  "_ntfy": "The ntfy topic is NOT stored here. It lives only in this repo's GitHub Actions secret NTFY_TOPIC_US (a different topic from the original tracker's)."
+}

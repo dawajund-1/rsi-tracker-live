@@ -1,0 +1,714 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Intraday Signals">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>RSI Live Tracker</title>
+<style>
+  :root {
+    --bg: #f5f6f8; --card: #ffffff; --text: #1a1c20; --muted: #6b7280;
+    --border: #e5e7eb; --bull: #16a34a; --bear: #dc2626; --accent: #2563eb;
+    --bull-bg: #dcfce7; --bear-bg: #fee2e2;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0e0f12; --card: #17181c; --text: #f3f4f6; --muted: #9ca3af;
+      --border: #2a2c31; --bull: #4ade80; --bear: #f87171; --accent: #60a5fa;
+      --bull-bg: #14311f; --bear-bg: #3a1414;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    padding: 16px 14px 40px; max-width: 680px; margin-inline: auto;
+  }
+  h1 { font-size: 1.15rem; margin: 4px 0 2px; }
+  .nav-link { font-size: 0.8rem; color: var(--accent); text-decoration: none; }
+  .updated { color: var(--muted); font-size: 0.8rem; margin-bottom: 4px; margin-top: 8px; }
+  .live-indicator {
+    display: flex; align-items: center; gap: 6px; color: var(--muted);
+    font-size: 0.72rem; margin-bottom: 16px;
+  }
+  .live-dot {
+    width: 7px; height: 7px; border-radius: 50%; background: var(--bull);
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; box-shadow: 0 0 0 0 var(--bull-bg); }
+    50% { opacity: 0.5; box-shadow: 0 0 0 4px transparent; }
+  }
+  .card {
+    background: var(--card); border: 1px solid var(--border); border-radius: 14px;
+    padding: 14px 16px; margin-bottom: 14px;
+  }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .stat-label { font-size: 0.72rem; color: var(--muted); text-transform: uppercase; letter-spacing: .03em; }
+  .stat-value { font-size: 1.15rem; font-weight: 600; margin-top: 2px; }
+  .section-title { font-size: 0.85rem; font-weight: 600; color: var(--muted); margin: 18px 4px 8px; text-transform: uppercase; letter-spacing: .03em; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+  th, td { text-align: left; padding: 8px 6px; border-bottom: 1px solid var(--border); white-space: nowrap; }
+  th { color: var(--muted); font-weight: 500; font-size: 0.72rem; text-transform: uppercase; }
+  .badge { display: inline-block; padding: 2px 8px; border-radius: 999px; font-size: 0.72rem; font-weight: 600; }
+  .badge.bull { color: var(--bull); background: var(--bull-bg); }
+  .badge.bear { color: var(--bear); background: var(--bear-bg); }
+  .badge.warn { color: #92620a; background: #fdf0d5; }
+  .badge.live-badge { color: var(--bull); background: none; padding: 0; font-size: 0.6rem; vertical-align: middle; }
+  @media (prefers-color-scheme: dark) { .badge.warn { color: #f0c674; background: #3a2f14; } }
+  .pl-pos { color: var(--bull); font-weight: 600; }
+  .pl-neg { color: var(--bear); font-weight: 600; }
+  .empty { color: var(--muted); font-size: 0.85rem; padding: 10px 4px; }
+  .table-wrap { overflow-x: auto; }
+  .footer { color: var(--muted); font-size: 0.75rem; line-height: 1.5; margin-top: 24px; text-align: center; }
+  .calc-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .calc-field { display: flex; flex-direction: column; gap: 4px; }
+  .calc-field label { font-size: 0.72rem; color: var(--muted); text-transform: uppercase; letter-spacing: .03em; }
+  .calc-field input, .calc-field textarea {
+    background: var(--bg); color: var(--text); border: 1px solid var(--border);
+    border-radius: 8px; padding: 8px 10px; font-size: 0.9rem; font-family: inherit;
+    resize: vertical;
+  }
+  .calc-result { font-size: 1.05rem; font-weight: 600; margin-top: 12px; color: var(--accent); }
+  .calc-btn {
+    margin-top: 10px; background: var(--accent); color: white; border: none;
+    border-radius: 8px; padding: 8px 14px; font-size: 0.85rem; font-weight: 600; cursor: pointer;
+  }
+  .calc-btn:hover { opacity: 0.9; }
+  .calc-del { background: none; border: none; color: var(--bear); cursor: pointer; font-size: 0.9rem; }
+  .refresh-btn {
+    background: var(--accent); color: white; border: none; border-radius: 10px;
+    padding: 8px 14px; font-size: 0.85rem; font-weight: 600;
+  }
+</style>
+</head>
+<body>
+  <h1>📈 RSI Live Tracker</h1>
+  <div class="updated" id="updated">Loading…</div>
+  <div id="provisional-banner" style="display:none;margin:12px 0;padding:12px 14px;border:1px solid #b8860b;border-left-width:4px;border-radius:6px;background:rgba(184,134,11,0.12);font-size:0.85rem;line-height:1.45;">
+    <strong>Provisional figures.</strong>
+    <span id="provisional-reason"></span>
+  </div>
+  <div class="live-indicator"><span class="live-dot"></span><span id="live-clock">Showing the close from the last completed bar</span></div>
+
+  <div class="section-title">Your Real Account (500 SAR start)</div>
+  <div class="card">
+    <div class="grid">
+      <div>
+        <div class="stat-label">Value (SAR)</div>
+        <div class="stat-value" id="real-value">—</div>
+      </div>
+      <div>
+        <div class="stat-label">Holding</div>
+        <div class="stat-value" id="real-pos">—</div>
+      </div>
+      <div>
+        <div class="stat-label">Realized P/L</div>
+        <div class="stat-value" id="real-pl">—</div>
+      </div>
+      <div>
+        <div class="stat-label">Purified</div>
+        <div class="stat-value" id="real-pur">—</div>
+      </div>
+    </div>
+    <div class="stat-label" id="real-pending" style="margin-top:10px"></div>
+  </div>
+
+  <div class="section-title">Practice Account (1,000 SAR start, trades by itself)</div>
+  <div class="card">
+    <div class="grid">
+      <div>
+        <div class="stat-label">Balance</div>
+        <div class="stat-value" id="balance">—</div>
+      </div>
+      <div>
+        <div class="stat-label">Open Position</div>
+        <div class="stat-value" id="openpos">—</div>
+      </div>
+      <div>
+        <div class="stat-label">Realized P/L</div>
+        <div class="stat-value" id="pl">—</div>
+      </div>
+      <div>
+        <div class="stat-label">Purified</div>
+        <div class="stat-value" id="purified">—</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-title">My Purification Calculator</div>
+  <div class="card">
+    <div class="calc-row">
+      <div class="calc-field">
+        <label for="calc-profit">Profit amount ($)</label>
+        <input type="number" id="calc-profit" step="0.01" placeholder="e.g. 5.20">
+      </div>
+      <div class="calc-field">
+        <label for="calc-pct">Purification %</label>
+        <input type="number" id="calc-pct" step="0.1" value="10">
+      </div>
+    </div>
+    <div class="calc-result" id="calc-result">Amount to purify: —</div>
+    <div class="calc-field" style="margin-top:10px;">
+      <label for="calc-notes">Notes (your own reasoning/method)</label>
+      <textarea id="calc-notes" rows="2" placeholder="Optional notes about how you calculated this..."></textarea>
+    </div>
+    <button class="calc-btn" id="calc-add-btn">+ Add to my log</button>
+    <div class="table-wrap" style="margin-top:12px;">
+      <table id="calc-log-table">
+        <thead><tr><th>Date</th><th>Profit</th><th>%</th><th>Purified</th><th>Notes</th><th></th></tr></thead>
+        <tbody><tr><td colspan="6" class="empty">No entries yet — this log is saved only in this browser.</td></tr></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="section-title">Watchlist</div>
+  <div class="card table-wrap">
+    <table id="watchlist-table">
+      <thead><tr><th>Ticker</th><th>Price</th><th id="indicatorHead1">EMA9</th><th id="indicatorHead2">EMA21</th><th>Position</th></tr></thead>
+      <tbody><tr><td colspan="5" class="empty">Loading…</td></tr></tbody>
+    </table>
+  </div>
+
+  <div class="section-title">Weekly &amp; Monthly Performance</div>
+  <div class="card">
+    <div id="perf-provisional" style="display:none;margin:0 0 12px;padding:10px 12px;
+      border:1px solid #b8860b;border-left-width:4px;border-radius:6px;
+      background:rgba(184,134,11,0.12);font-size:0.82rem;line-height:1.45;">
+      <strong>Provisional figures.</strong> <span id="perf-provisional-reason"></span>
+    </div>
+    <div id="perf-summary" style="font-size:.85rem;margin-bottom:12px"></div>
+    <div class="table-wrap">
+      <table id="weekly-table">
+        <thead><tr><th>ISO week (Mon-Sun, by session)</th><th>Closed</th><th>W / L</th>
+          <th>Realized net P/L</th><th>Purified</th><th>Cumulative</th></tr></thead>
+        <tbody><tr><td colspan="6" class="empty">Loading...</td></tr></tbody>
+      </table>
+    </div>
+    <div style="height:14px"></div>
+    <div class="table-wrap">
+      <table id="monthly-table">
+        <thead><tr><th>Calendar month (by session)</th><th>Closed</th><th>W / L</th>
+          <th>Realized net P/L</th><th>Purified</th><th>Cumulative</th></tr></thead>
+        <tbody><tr><td colspan="6" class="empty">Loading...</td></tr></tbody>
+      </table>
+    </div>
+    <p style="color:var(--muted);font-size:.78rem;margin:12px 0 0">
+      Derived from <code>data/paper_trades.csv</code> only - no ledger row is modified.
+      A period is attributed by the market SESSION the trade closed on, derived from the run timestamp, not by when the job happened to run — GitHub delays the cron 3–4 hours, so every row here was written the day after its session. Realized P/L
+      is the sum of <code>pl_usd</code>; purification is the sum of
+      <code>purification_usd</code>. Reproduce independently with
+      <code>scripts/Get-PeriodPerformance.ps1</code>.
+    </p>
+  </div>
+
+  <div class="section-title">Recent Paper Trades</div>
+  <div class="card table-wrap">
+    <table id="trades-table">
+      <thead><tr><th>Time (AST)</th><th>Action</th><th>Ticker</th><th>Price</th><th>P/L</th></tr></thead>
+      <tbody><tr><td colspan="5" class="empty">Loading…</td></tr></tbody>
+    </table>
+  </div>
+
+  <div class="footer">
+    This page only tracks a hypothetical ("paper") position and public market signals.<br>
+    No real orders are ever placed — all real trading decisions happen manually in Awaed.
+  </div>
+
+<script>
+const REPO = "dawajund-1/rsi-tracker-live";
+const BRANCH = "main";
+const RAW = `https://raw.githubusercontent.com/${REPO}/${BRANCH}`;
+
+// The live-tick feed is DISABLED. It called Finnhub directly from this page,
+// which meant the API key had to be embedded in a public file - anyone could
+// read and drain it. A browser-side call can never hold a secret, so the
+// feature cannot come back as-is; it needs a small server-side proxy that
+// holds the key and that this page calls instead. Until that exists the page
+// shows the snapshot close, clearly labelled, which is the price the strategy
+// actually trades on anyway.
+const LIVE_PRICES_ENABLED = false;
+const livePrices = {}; // ticker -> { price, at }
+let lastSnapshot = null;
+let lastTrades = [];
+let lastLiveFetchAt = null;
+let lastLiveFetchHadSuccess = false;
+
+function fmtUsd(n) {
+  if (n === null || n === undefined || n === "") return "—";
+  const v = Number(n);
+  return (v < 0 ? "-$" : "$") + Math.abs(v).toFixed(2);
+}
+
+function fmtSar(n) {
+  if (n === null || n === undefined) return "";
+  return Number(n).toFixed(2) + " SAR";
+}
+
+function plClass(n) {
+  const v = Number(n);
+  if (isNaN(v)) return "";
+  return v >= 0 ? "pl-pos" : "pl-neg";
+}
+
+async function loadSnapshot() {
+  const res = await fetch(`${RAW}/data/latest_snapshot.json?cachebust=${Date.now()}`);
+  if (!res.ok) throw new Error("no snapshot yet");
+  return res.json();
+}
+
+async function loadTradesCsv() {
+  const res = await fetch(`${RAW}/data/paper_trades.csv?cachebust=${Date.now()}`);
+  if (!res.ok) return [];
+  const text = await res.text();
+  const lines = text.trim().split("\n");
+  if (lines.length < 2) return [];
+  const headers = lines[0].split(",").map(h => h.replace(/"/g, ""));
+  return lines.slice(1).map(line => {
+    const cells = line.split(",").map(c => c.replace(/"/g, ""));
+    const row = {};
+    headers.forEach((h, i) => row[h] = cells[i]);
+    return row;
+  });
+}
+
+// ---- Weekly / monthly performance -------------------------------------
+// Derived only from the committed ledger. Nothing here writes, normalises or
+// corrects a ledger row; SELL rows are read exactly as stored. Periods are keyed
+// in UTC, matching the ledger's own timestamp_utc.
+
+function isoWeekOf(d) {
+  const t = new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate()));
+  const dow = (t.getUTCDay() + 6) % 7;            // Mon = 0
+  t.setUTCDate(t.getUTCDate() - dow + 3);         // Thursday decides the ISO year
+  const year = t.getUTCFullYear();
+  const jan4 = new Date(Date.UTC(year, 0, 4));
+  const jan4dow = (jan4.getUTCDay() + 6) % 7;
+  const week1Mon = new Date(Date.UTC(year, 0, 4 - jan4dow));
+  const week = Math.round((t - week1Mon) / 604800000) + 1;
+  return { year: year, week: week };
+}
+
+function isoWeekMonday(d) {
+  const t = new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate()));
+  t.setUTCDate(t.getUTCDate() - ((t.getUTCDay() + 6) % 7));
+  return t;
+}
+
+// --- Saudi time display ---------------------------------------------------
+// All wall-clock timestamps on this page are rendered in Saudi Arabia Standard
+// Time (Asia/Riyadh, UTC+3, no DST) and labelled "AST", regardless of the
+// viewer's device timezone. This is display only: the scheduler still runs on
+// UTC and every guard keys on the bar id, not on the clock.
+const SA_TZ = "Asia/Riyadh";
+// Ledger timestamps are UTC. Project A writes them WITHOUT a trailing "Z", which
+// new Date() would otherwise read as local time and silently shift by the UTC
+// offset - so force the Z on before parsing, then render in Riyadh time.
+const asUtc = s => new Date(/[Zz]$/.test(s) ? s : s + "Z");
+// Which market SESSION a ledger row belongs to.
+//
+// The timestamp records when the job RAN, not which close it traded. GitHub
+// delays the cron 3-4 hours, so a run lands at ~01:00 UTC the next day: every
+// row in this ledger has a run date later than its session date. Bucketing a
+// weekly or monthly total by run time would push a month-end session into the
+// following month.
+//
+// Derivation mirrors Remove-PartialBar: at or after 20:00 UTC the session is
+// that same day, otherwise it is the previous weekday. It does not know market
+// holidays, so a session following one can be attributed a day early -
+// immaterial for week and month totals, which is all this is used for.
+function sessionOf(ts) {
+  const d = asUtc(ts);
+  const s = new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate()));
+  if (d.getUTCHours() < 20) s.setUTCDate(s.getUTCDate() - 1);
+  while (s.getUTCDay() === 0 || s.getUTCDay() === 6) s.setUTCDate(s.getUTCDate() - 1);
+  return s;
+}
+
+const saStamp = s => s
+  ? asUtc(s).toLocaleString("en-GB",
+      { dateStyle: "medium", timeStyle: "medium", timeZone: SA_TZ })
+  : "";
+
+// Riyadh time only. New York time was shown alongside until 2026-10-12, to
+// disambiguate which US session a timestamp belonged to. Periods now bucket
+// by market session rather than by run time, so the second clock was noise.
+const saDateTime = d =>
+  d.toLocaleString("en-GB", { dateStyle: "medium", timeStyle: "short", timeZone: SA_TZ })
+  + " AST";
+const saTime = d => d.toLocaleTimeString("en-GB",
+  { hour: "2-digit", minute: "2-digit", timeZone: SA_TZ }) + " AST";
+const saDate = d => d.toLocaleDateString("en-GB",
+  { dateStyle: "medium", timeZone: SA_TZ });
+
+const dmy = d => d.toLocaleDateString(undefined,
+  { month: "short", day: "numeric", timeZone: "UTC" });
+
+const money = v => (v >= 0 ? "+" : "-") + "$" + Math.abs(v).toFixed(4);
+
+function rollup(trades, keyFn, labelFn) {
+  const buckets = new Map();
+  for (const r of trades) {
+    // SELL rows are realized trades. VOID and ADJUST rows are append-only
+    // corrections from the 2026-10-13 reconciliation: they carry the P/L
+    // difference and are dated like the trade they correct, so every period
+    // shows the true figure while the original rows stay untouched.
+    const isVoid = r.action === "VOID", isAdj = r.action === "ADJUST";
+    if (r.action !== "SELL" && !isVoid && !isAdj) continue;
+    if ((isVoid || isAdj) && r.pl_usd === "") continue;   // voided buy / share-count fix: no P/L
+    const d = sessionOf(r.timestamp_utc);
+    if (isNaN(d)) continue;
+    const k = keyFn(d);
+    if (!buckets.has(k)) {
+      buckets.set(k, { key: k, label: labelFn(d), closed: 0, wins: 0, losses: 0,
+                       pl: 0, pur: 0 });
+    }
+    const b = buckets.get(k);
+    const pl = parseFloat(r.pl_usd);
+    const pur = parseFloat(r.purification_usd);
+    if (isVoid) {                                   // a voided sale never happened
+      b.closed -= 1;
+      if (pl < 0) b.wins -= 1; else if (pl > 0) b.losses -= 1;
+      if (!isNaN(pl)) b.pl += pl;
+    } else if (isAdj) {
+      if (!isNaN(pl)) b.pl += pl;
+    } else {
+      b.closed += 1;
+      if (!isNaN(pl)) { b.pl += pl; if (pl > 0) b.wins += 1; else if (pl < 0) b.losses += 1; }
+    }
+    if (!isNaN(pur)) b.pur += pur;
+  }
+  const rows = [...buckets.values()].sort((a, b) => a.key < b.key ? -1 : 1);
+  let cum = 0;
+  rows.forEach(r => { cum += r.pl; r.cum = cum; });
+  return rows;
+}
+
+function fillPerfTable(id, rows) {
+  const tb = document.querySelector("#" + id + " tbody");
+  tb.innerHTML = "";
+  if (!rows.length) {
+    tb.innerHTML = '<tr><td colspan="6" class="empty">No closed trades yet.</td></tr>';
+    return;
+  }
+  for (const r of rows.slice().reverse()) {        // newest first
+    const tr = document.createElement("tr");
+    tr.innerHTML = "<td>" + r.label + "</td><td>" + r.closed + "</td>" +
+      "<td>" + r.wins + " / " + r.losses + "</td>" +
+      '<td class="' + (r.pl >= 0 ? "bull" : "bear") + '">' + money(r.pl) + "</td>" +
+      "<td>$" + r.pur.toFixed(4) + "</td>" +
+      "<td>" + money(r.cum) + "</td>";
+    tb.appendChild(tr);
+  }
+}
+
+function renderPerformance(trades, snapshot) {
+  const weekly = rollup(trades,
+    d => { const w = isoWeekOf(d); return w.year + "-W" + String(w.week).padStart(2, "0"); },
+    d => { const w = isoWeekOf(d); const mon = isoWeekMonday(d);
+           const sun = new Date(mon); sun.setUTCDate(sun.getUTCDate() + 6);
+           return w.year + "-W" + String(w.week).padStart(2, "0") +
+                  " (" + dmy(mon) + " - " + dmy(sun) + ")"; });
+
+  const monthly = rollup(trades,
+    d => d.getUTCFullYear() + "-" + String(d.getUTCMonth() + 1).padStart(2, "0"),
+    d => d.toLocaleDateString(undefined,
+           { year: "numeric", month: "long", timeZone: "UTC" }));
+
+  fillPerfTable("weekly-table", weekly);
+  fillPerfTable("monthly-table", monthly);
+
+  const totalPl = monthly.reduce((a, r) => a + r.pl, 0);
+  const totalPur = monthly.reduce((a, r) => a + r.pur, 0);
+  const closed = monthly.reduce((a, r) => a + r.closed, 0);
+
+  // Unrealized is reported separately and never folded into the realized rollups.
+  let unreal;
+  const op = snapshot && snapshot.open_position;
+  if (op) {
+    const row = (snapshot.tickers || []).find(t => t.ticker === op.ticker);
+    if (row && row.price) {
+      const u = (row.price - op.entry_price) * op.shares;
+      unreal = " &nbsp;&middot;&nbsp; <strong>Unrealized</strong> (open " + op.ticker + "): " +
+        '<span class="' + (u >= 0 ? "bull" : "bear") + '">' + money(u) + "</span>" +
+        " - mark-to-market, excluded from every figure above";
+    } else {
+      unreal = " &nbsp;&middot;&nbsp; <strong>Open position:</strong> " + op.ticker +
+        " - unrealized P/L unavailable (no price in snapshot), excluded above";
+    }
+  } else {
+    unreal = " &nbsp;&middot;&nbsp; No open position, so there is no unrealized P/L.";
+  }
+
+  document.getElementById("perf-summary").innerHTML =
+    "<strong>Cumulative realized net P/L:</strong> " +
+    '<span class="' + (totalPl >= 0 ? "bull" : "bear") + '">' + money(totalPl) + "</span>" +
+    " across " + closed + " closed trade" + (closed === 1 ? "" : "s") + " &middot; " +
+    "<strong>Purified:</strong> $" + totalPur.toFixed(4) + " &middot; " +
+    "Currency: <strong>USD</strong>" + unreal;
+
+  const integ = (snapshot && snapshot.integrity) || null;
+  const prov = !integ || integ.pl_provisional;
+  const el = document.getElementById("perf-provisional");
+  if (prov) {
+    document.getElementById("perf-provisional-reason").textContent =
+      (integ && integ.provisional_reason) ||
+      "These figures come from a ledger that still contains trades flagged by the 2026-09-21 duplicate-execution audit. Every weekly and monthly total above inherits that. See RECONCILIATION-2026-09-21.md.";
+    el.style.display = "";
+  } else {
+    el.style.display = "none";
+  }
+}
+
+const CALC_LOG_KEY = "purification_calc_log";
+
+function loadCalcLog() {
+  try { return JSON.parse(localStorage.getItem(CALC_LOG_KEY)) || []; }
+  catch (e) { return []; }
+}
+
+function saveCalcLog(log) {
+  localStorage.setItem(CALC_LOG_KEY, JSON.stringify(log));
+}
+
+function updateCalcResult() {
+  const profit = parseFloat(document.getElementById("calc-profit").value);
+  const pct = parseFloat(document.getElementById("calc-pct").value);
+  const resultEl = document.getElementById("calc-result");
+  if (isNaN(profit) || isNaN(pct)) {
+    resultEl.textContent = "Amount to purify: —";
+    return;
+  }
+  const amount = profit * (pct / 100);
+  resultEl.textContent = `Amount to purify: $${amount.toFixed(2)}`;
+}
+
+function renderCalcLog() {
+  const log = loadCalcLog();
+  const tbody = document.querySelector("#calc-log-table tbody");
+  tbody.innerHTML = "";
+  if (log.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="6" class="empty">No entries yet — this log is saved only in this browser.</td></tr>';
+    return;
+  }
+  log.slice().reverse().forEach((entry) => {
+    const tr = document.createElement("tr");
+    const idx = log.indexOf(entry);
+    tr.innerHTML = `<td>${entry.date}</td><td>$${entry.profit.toFixed(2)}</td><td>${entry.pct}%</td><td>$${entry.amount.toFixed(2)}</td><td>${entry.notes || ""}</td><td><button class="calc-del" data-idx="${idx}">✕</button></td>`;
+    tbody.appendChild(tr);
+  });
+  tbody.querySelectorAll(".calc-del").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const log = loadCalcLog();
+      log.splice(parseInt(btn.dataset.idx), 1);
+      saveCalcLog(log);
+      renderCalcLog();
+    });
+  });
+}
+
+function initCalculator() {
+  document.getElementById("calc-profit").addEventListener("input", updateCalcResult);
+  document.getElementById("calc-pct").addEventListener("input", updateCalcResult);
+  document.getElementById("calc-add-btn").addEventListener("click", () => {
+    const profit = parseFloat(document.getElementById("calc-profit").value);
+    const pct = parseFloat(document.getElementById("calc-pct").value);
+    const notes = document.getElementById("calc-notes").value.trim();
+    if (isNaN(profit) || isNaN(pct)) { return; }
+    const log = loadCalcLog();
+    log.push({
+      date: saDate(new Date()),
+      profit, pct, amount: profit * (pct / 100), notes
+    });
+    saveCalcLog(log);
+    document.getElementById("calc-profit").value = "";
+    document.getElementById("calc-notes").value = "";
+    updateCalcResult();
+    renderCalcLog();
+  });
+  renderCalcLog();
+}
+
+function renderReal(snapshot) {
+  const r = snapshot.real_account;
+  if (!r) { document.getElementById("real-pending").textContent = "No real trades recorded yet."; return; }
+  const rate = 3.75;
+  const prices = {};
+  (snapshot.tickers || []).forEach(t => { if (t.price) prices[t.ticker] = t.price; });
+  let value = Number(r.cash_usd) || 0;
+  if (r.position) value += Number(r.position.shares) * (prices[r.position.ticker] || Number(r.position.entry_price));
+  const sar = value * rate, chg = sar - Number(r.start_sar);
+  const v = document.getElementById("real-value");
+  v.textContent = sar.toFixed(2) + " (" + (chg >= 0 ? "+" : "") + chg.toFixed(2) + ")";
+  v.className = "stat-value " + plClass(chg);
+  document.getElementById("real-pos").textContent = r.position
+    ? `${r.position.ticker} ${r.position.shares} sh @ $${r.position.entry_price}` : "Cash";
+  document.getElementById("real-pl").textContent = "SAR " + (Number(r.realized_pl_usd) * rate).toFixed(2);
+  document.getElementById("real-pur").textContent = "SAR " + (Number(r.purified_usd) * rate).toFixed(2);
+  const pend = (r.pending || []).map(p => `${p.action} ${p.ticker} @ $${p.price}`);
+  document.getElementById("real-pending").textContent = pend.length
+    ? "Waiting for your reply in ntfy: " + pend.join(", ") + "  (reply done / done <price> / skip)" : "";
+}
+
+function render(snapshot, trades) {
+  renderIntegrity(snapshot);
+  try { renderReal(snapshot); } catch (e) { console.log(e); }
+  renderPerformance(lastTrades, snapshot);
+  const gen = new Date(snapshot.generated_at_utc);
+  document.getElementById("updated").textContent =
+    "Last updated: " + saDateTime(gen);
+
+  const p = snapshot.portfolio;
+  document.getElementById("balance").textContent = fmtUsd(p.balance_usd);
+  document.getElementById("balance").title = fmtSar(p.balance_sar);
+  document.getElementById("pl").textContent = fmtUsd(p.realized_pl_usd);
+  document.getElementById("pl").className = "stat-value " + plClass(p.realized_pl_usd);
+  document.getElementById("purified").textContent = fmtUsd(p.purified_total_usd);
+
+  const op = snapshot.open_position;
+  document.getElementById("openpos").textContent = op ? `${op.ticker} @ $${op.entry_price}` : "None";
+
+  const wlBody = document.querySelector("#watchlist-table tbody");
+  wlBody.innerHTML = "";
+  const heldTicker = op ? op.ticker : null;
+  // The RSI rule reports a POSITION (LONG/FLAT) rather than a trend, and fills
+  // the rsi column instead of the two EMA columns. Relabel the headers so the
+  // table matches whichever rule actually produced the snapshot.
+  const isRsi = (snapshot.tickers || []).some(t => t.strategy === 'rsi_revert');
+  const h1 = document.getElementById('indicatorHead1');
+  const h2 = document.getElementById('indicatorHead2');
+  if (h1 && h2) {
+    h1.textContent = isRsi ? 'RSI(2)' : 'EMA9';
+    h2.textContent = isRsi ? 'Signal' : 'EMA21';
+  }
+
+  (snapshot.tickers || []).forEach(t => {
+    const tr = document.createElement("tr");
+    if (t.ticker === heldTicker) tr.style.background = "var(--bull-bg)";
+    const badge = t.strategy === 'rsi_revert'
+      ? `<span class="badge ${t.trend === 'LONG' ? 'bull' : 'bear'}">${t.trend === 'LONG' ? '● Holding' : '○ Flat'}</span>`
+      : `<span class="badge ${t.trend === 'BULL' ? 'bull' : 'bear'}">${t.trend === 'BULL' ? '▲ Bull' : '▼ Bear'}</span>`;
+    const warn = t.early_warning && t.early_warning !== 'NONE'
+      ? ` <span class="badge warn" title="Early warning — not a confirmed signal">⚠️ ${t.early_warning === 'WEAKENING' ? 'Weakening' : 'Strengthening'}</span>`
+      : '';
+    const live = livePrices[t.ticker];
+    const shownPrice = live ? live.price : t.price;
+    const priceCell = live
+      ? `$${shownPrice} <span class="badge live-badge" title="Live from Finnhub, ${saTime(new Date(live.at))}">●</span>`
+      : `$${shownPrice}`;
+    const col1 = t.strategy === 'rsi_revert' ? (t.rsi ?? '—') : t.ema9;
+    const col2 = t.strategy === 'rsi_revert'
+      ? (t.signal && t.signal !== 'NONE' ? `<strong>${t.signal}</strong>` : '—')
+      : t.ema21;
+    tr.innerHTML = `<td><strong>${t.ticker}</strong>${t.ticker === heldTicker ? ' 📍' : ''}</td><td>${priceCell}</td><td>${col1}</td><td>${col2}</td><td>${badge}${warn}</td>`;
+    wlBody.appendChild(tr);
+  });
+  if (!snapshot.tickers || snapshot.tickers.length === 0) {
+    wlBody.innerHTML = '<tr><td colspan="5" class="empty">No data yet — first run pending.</td></tr>';
+  }
+
+  const trBody = document.querySelector("#trades-table tbody");
+  trBody.innerHTML = "";
+  const recent = trades.slice(-15).reverse();
+  recent.forEach(t => {
+    const tr = document.createElement("tr");
+    const pl = t.pl_usd ? `<span class="${plClass(t.pl_usd)}">${fmtUsd(t.pl_usd)}</span>` : "—";
+    tr.innerHTML = `<td>${saStamp(t.timestamp_utc)}</td><td>${t.action}</td><td>${t.ticker}</td><td>$${t.price}</td><td>${pl}</td>`;
+    trBody.appendChild(tr);
+  });
+  if (recent.length === 0) {
+    trBody.innerHTML = '<tr><td colspan="5" class="empty">No trades yet.</td></tr>';
+  }
+}
+
+const REFRESH_MS = 30000;
+const LIVE_PRICE_MS = 30000;
+
+async function refreshLivePrices() {
+  if (!LIVE_PRICES_ENABLED) return;
+  if (!lastSnapshot || !lastSnapshot.tickers) return;
+  const tickers = lastSnapshot.tickers.map(t => t.ticker);
+  let anySuccess = false;
+  await Promise.all(tickers.map(async (ticker) => {
+    try {
+      const price = await fetchLivePrice(ticker);
+      livePrices[ticker] = { price, at: Date.now() };
+      anySuccess = true;
+    } catch (e) {
+      // keep last known live price (or fall back to snapshot price) on a transient failure
+    }
+  }));
+  lastLiveFetchAt = Date.now();
+  lastLiveFetchHadSuccess = anySuccess;
+  if (lastSnapshot) render(lastSnapshot, lastTrades);
+}
+
+function renderIntegrity(snapshot) {
+  const banner = document.getElementById("provisional-banner");
+  if (!banner) return;
+  const integ = (snapshot && snapshot.integrity) || null;
+  // A snapshot with no integrity block predates the 2026-09-21 repair, so by
+  // definition it was produced by the code that generated the phantom fills.
+  if (!integ) {
+    document.getElementById("provisional-reason").textContent =
+      " This snapshot was produced before the 2026-09-21 duplicate-execution repair, so the figures" +
+      " above include trades flagged by that audit. See RECONCILIATION-2026-09-21.md in the repository.";
+    banner.style.display = "";
+    return;
+  }
+  if (!integ.pl_provisional) { banner.style.display = "none"; return; }
+  let text = integ.provisional_reason || "Headline P/L includes trades that are still under review.";
+  const review = Number(integ.outbox_needs_review || 0);
+  if (review > 0) text += ` ${review} notification(s) need manual review.`;
+  document.getElementById("provisional-reason").textContent = " " + text;
+  banner.style.display = "";
+}
+
+function tickClock() {
+  const el = document.getElementById("live-clock");
+  if (!el) return;
+  if (!LIVE_PRICES_ENABLED) {
+    const at = lastSnapshot && lastSnapshot.generated_at_utc;
+    el.textContent = at
+      ? `Showing the close from the last completed bar — ${saDateTime(new Date(at))}`
+      : "Showing the close from the last completed bar";
+    return;
+  }
+  if (!lastLiveFetchAt) {
+    el.textContent = "Live prices — waiting for first update…";
+    return;
+  }
+  const secsAgo = Math.round((Date.now() - lastLiveFetchAt) / 1000);
+  if (!lastLiveFetchHadSuccess && secsAgo > 60) {
+    el.textContent = `Live price fetch failing (last tried ${secsAgo}s ago) — check connection`;
+    el.style.color = "var(--bear)";
+  } else {
+    el.textContent = `Live prices — last tick ${secsAgo}s ago (updates every 30s)`;
+    el.style.color = "";
+  }
+}
+
+async function init(isAutoRefresh) {
+  try {
+    const [snapshot, trades] = await Promise.all([loadSnapshot(), loadTradesCsv()]);
+    lastSnapshot = snapshot;
+    lastTrades = trades;
+    render(snapshot, trades);
+  } catch (e) {
+    if (!isAutoRefresh) {
+      document.getElementById("updated").textContent = "No data yet — the first scheduled run hasn't completed.";
+    }
+  }
+}
+
+initCalculator();
+init(false).then(refreshLivePrices);
+setInterval(() => init(true), REFRESH_MS);
+setInterval(refreshLivePrices, LIVE_PRICE_MS);
+setInterval(tickClock, 1000);
+tickClock();
+</script>
+</body>
+</html>

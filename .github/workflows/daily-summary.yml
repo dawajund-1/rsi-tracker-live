@@ -1,0 +1,45 @@
+name: Daily Summary
+
+on:
+  schedule:
+    # 21:45 UTC Mon-Fri, 15 minutes after the signal run, so the summary always
+    # reflects that session. Works in both EDT and EST for the same reason.
+    - cron: "45 21 * * 1-5"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  summarize:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run daily summary
+        shell: pwsh
+        env:
+          NTFY_TOPIC_US: ${{ secrets.NTFY_TOPIC_US }}
+        run: ./scripts/Get-DailySummary.ps1
+
+      - name: Commit updated data
+        run: |
+          git config user.name "rsi-live-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add data/
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+            exit 0
+          fi
+          git commit -m "Daily summary $(date -u +%Y-%m-%d)"
+          # Signal checks write to the same branch, so a push can lose the race.
+          # Rebase onto whatever landed and retry.
+          for attempt in 1 2 3 4 5; do
+            if git push; then
+              exit 0
+            fi
+            echo "Push rejected (attempt $attempt); rebasing onto origin/main."
+            git pull --rebase origin main
+          done
+          echo "::error::Push failed after 5 attempts."
+          exit 1

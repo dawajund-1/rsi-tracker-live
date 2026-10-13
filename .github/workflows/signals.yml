@@ -1,0 +1,60 @@
+name: Daily Signal Check
+
+on:
+  schedule:
+    # ONE documented post-close execution path.
+    #
+    # 21:30 UTC works year-round without a DST table:
+    #   EDT (Mar-Nov): 17:30 ET - session closed at 16:00 ET, 90 min of margin.
+    #   EST (Nov-Mar): 16:30 ET - session closed at 16:00 ET, 30 min of margin.
+    # Early-close days (13:00 ET) settle even earlier, so they are covered too.
+    #
+    # Weekends and US market holidays need no calendar: on a non-session day
+    # Yahoo serves no new daily bar, so the bar id in data/state.json is already
+    # marked decided and the run is a no-op. The same guard makes a delayed,
+    # retried or manually re-dispatched run safe - a bar is decided exactly once.
+    - cron: "30 21 * * 1-5"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run idempotency tests
+        shell: pwsh
+        run: ./scripts/Test-Idempotency.ps1
+
+      - name: Run signal check
+        shell: pwsh
+        env:
+          # Never echo this. The script reads it directly and builds the ntfy
+          # URL inline; Actions masks the value in logs.
+          NTFY_TOPIC_US: ${{ secrets.NTFY_TOPIC_US }}
+        run: ./scripts/Get-Signals.ps1
+
+      - name: Commit updated data
+        run: |
+          git config user.name "rsi-live-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add data/
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+            exit 0
+          fi
+          git commit -m "Update signals $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+          # Another workflow may write to the same branch, so a push can lose the
+          # race. Rebase onto whatever landed and retry.
+          for attempt in 1 2 3 4 5; do
+            if git push; then
+              exit 0
+            fi
+            echo "Push rejected (attempt $attempt); rebasing onto origin/main."
+            git pull --rebase origin main
+          done
+          echo "::error::Push failed after 5 attempts."
+          exit 1
