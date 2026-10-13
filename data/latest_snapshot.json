@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-10-13T10:41:12Z",
+  "generated_at_utc": "2026-10-13T11:20:12Z",
   "prices_live": true,
   "tickers": [
     {
@@ -117,7 +117,8 @@
       "META",
       "AMD"
     ],
-    "purification_pct": 0.1
+    "purification_pct": 0.1,
+    "real_mode": "test"
   },
   "integrity": {
     "pl_provisional": false,
