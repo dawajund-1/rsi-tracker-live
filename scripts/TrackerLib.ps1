@@ -240,6 +240,7 @@ function Write-Snapshot {
         config = [pscustomobject]@{
             watchlist        = $Cfg.watchlist
             purification_pct = $Cfg.purification_pct
+            real_mode        = $(if ($Cfg.real_account) { "$($Cfg.real_account.mode)" } else { "" })
         }
         # Surfaced on the dashboard so headline P/L is never read as settled
         # while it still contains trades flagged by the 2026-09-21 audit.

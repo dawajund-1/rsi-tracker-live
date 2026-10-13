@@ -42,7 +42,8 @@
   },
   "real_account": {
     "starting_sar": 500,
-    "note": "The owner's own money. Only trades he confirms by replying in the ntfy app are recorded (see scripts/RealAccountLib.ps1). The 1,000 SAR practice account (starting_capital_sar) trades by itself."
+    "note": "mode 'test': nothing real yet - 22:30 alerts follow the 1,000 SAR practice account, are labelled TEST MODE and need no reply. Set mode to 'live' when the owner starts with real money: alerts are then sized to starting_sar and only trades he confirms by replying in ntfy are recorded.",
+    "mode": "test"
   },
   "_ntfy": "The ntfy topic is NOT stored here. It lives only in this repo's GitHub Actions secret NTFY_TOPIC_US (a different topic from the original tracker's)."
 }

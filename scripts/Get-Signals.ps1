@@ -272,42 +272,47 @@ else {
         }
     }
 
-    # --- the owner's REAL account, on the real close -------------------------
-    # The 22:30 alert was a preview on a still-moving price. Now that the close
-    # is final, re-run the same decision for the real account:
-    #  * an action the preview did NOT announce is pushed now ("at the close");
-    #  * a previewed action that did NOT come true is pushed as a correction.
-    $realHeld = if ($real.position) { [string]$real.position.ticker } else { $null }
-    $dClose = Get-PreCloseDecision -HeldTicker $realHeld -Rsi $rsiMap -Watchlist @($cfg.watchlist) `
-                -BuyBelow ([double]$live.rsi_buy_below) -ExitAbove ([double]$live.rsi_exit_above)
-    $cashAfter = [double]$real.cash_usd
-    if ($dClose.Sell -and $real.position) { $cashAfter += [double]$real.position.shares * $pxMap[$dClose.Sell] }
-    foreach ($a in @(@("SELL", $dClose.Sell), @("BUY", $dClose.Buy))) {
-        $act, $t = $a
-        if (-not $t) { continue }
-        if (Test-OutboxHas "PRECLOSE:${act}:${t}:${sessionBarId}") { continue }   # already told at 22:30
-        Add-OutboxEvent -Id "CLOSE:${act}:${t}:${sessionBarId}" -Title "$act signal at the close: $t" `
-            -Message ("Not in the 22:30 alert - it appeared at the close. " +
-                      (Get-RealAlertText -Action $act -Ticker $t -Price $pxMap[$t] -Rsi $rsiMap[$t] -Real $real -Cfg $cfg `
-                          -When "at the next chance (the market has closed)" -Cash $cashAfter)) | Out-Null
-        Add-RealPending -State $real -Action $act -Ticker $t -Price $pxMap[$t] -BarId $sessionBarId
+    # In TEST MODE the alerts follow the practice account, which has just
+    # traded on this close; the summary reports what it did, so no
+    # close-time real-account alerts are needed.
+    if (-not (Test-RealTestMode -Cfg $cfg)) {
+        # --- the owner's REAL account, on the real close -------------------------
+        # The 22:30 alert was a preview on a still-moving price. Now that the close
+        # is final, re-run the same decision for the real account:
+        #  * an action the preview did NOT announce is pushed now ("at the close");
+        #  * a previewed action that did NOT come true is pushed as a correction.
+        $realHeld = if ($real.position) { [string]$real.position.ticker } else { $null }
+        $dClose = Get-PreCloseDecision -HeldTicker $realHeld -Rsi $rsiMap -Watchlist @($cfg.watchlist) `
+                    -BuyBelow ([double]$live.rsi_buy_below) -ExitAbove ([double]$live.rsi_exit_above)
+        $cashAfter = [double]$real.cash_usd
+        if ($dClose.Sell -and $real.position) { $cashAfter += [double]$real.position.shares * $pxMap[$dClose.Sell] }
+        foreach ($a in @(@("SELL", $dClose.Sell), @("BUY", $dClose.Buy))) {
+            $act, $t = $a
+            if (-not $t) { continue }
+            if (Test-OutboxHas "PRECLOSE:${act}:${t}:${sessionBarId}") { continue }   # already told at 22:30
+            Add-OutboxEvent -Id "CLOSE:${act}:${t}:${sessionBarId}" -Title "$act signal at the close: $t" `
+                -Message ("Not in the 22:30 alert - it appeared at the close. " +
+                          (Get-RealAlertText -Action $act -Ticker $t -Price $pxMap[$t] -Rsi $rsiMap[$t] -Real $real -Cfg $cfg `
+                              -When "at the next chance (the market has closed)" -Cash $cashAfter)) | Out-Null
+            Add-RealPending -State $real -Action $act -Ticker $t -Price $pxMap[$t] -BarId $sessionBarId
+        }
+        foreach ($e in @(@(Read-Outbox) | Where-Object { $_.id -like "PRECLOSE:*:*:$sessionBarId" })) {
+            $p = $e.id -split ":"
+            $act, $t = $p[1], $p[2]
+            # Judge the SIGNAL, not his account: if he already confirmed the trade
+            # his holdings have changed, but the question is only whether the RSI
+            # level still held at the final close.
+            $cameTrue = $rsiMap.ContainsKey($t) -and (
+                ($act -eq "SELL" -and $rsiMap[$t] -gt [double]$live.rsi_exit_above) -or
+                ($act -eq "BUY"  -and $rsiMap[$t] -lt [double]$live.rsi_buy_below))
+            if ($cameTrue) { continue }
+            $r = if ($rsiMap.ContainsKey($t)) { [math]::Round($rsiMap[$t], 1) } else { "?" }
+            Add-OutboxEvent -Id "CANCEL:${act}:${t}:${sessionBarId}" -Title "Correction: $act $t did not happen" `
+                -Message ("At the close $t's RSI ended at $r, so the 22:30 $act signal did not come true. " +
+                          "If you already did it, reply 'done' and it will be recorded; otherwise reply 'skip'.") | Out-Null
+        }
+        Save-RealState $real
     }
-    foreach ($e in @(@(Read-Outbox) | Where-Object { $_.id -like "PRECLOSE:*:*:$sessionBarId" })) {
-        $p = $e.id -split ":"
-        $act, $t = $p[1], $p[2]
-        # Judge the SIGNAL, not his account: if he already confirmed the trade
-        # his holdings have changed, but the question is only whether the RSI
-        # level still held at the final close.
-        $cameTrue = $rsiMap.ContainsKey($t) -and (
-            ($act -eq "SELL" -and $rsiMap[$t] -gt [double]$live.rsi_exit_above) -or
-            ($act -eq "BUY"  -and $rsiMap[$t] -lt [double]$live.rsi_buy_below))
-        if ($cameTrue) { continue }
-        $r = if ($rsiMap.ContainsKey($t)) { [math]::Round($rsiMap[$t], 1) } else { "?" }
-        Add-OutboxEvent -Id "CANCEL:${act}:${t}:${sessionBarId}" -Title "Correction: $act $t did not happen" `
-            -Message ("At the close $t's RSI ended at $r, so the 22:30 $act signal did not come true. " +
-                      "If you already did it, reply 'done' and it will be recorded; otherwise reply 'skip'.") | Out-Null
-    }
-    Save-RealState $real
 
     Complete-BarDecision -Guard $guard
 }

@@ -84,8 +84,8 @@ $rSar = [math]::Round($rv * [double]$cfg.sar_per_usd, 2)
 $rChg = [math]::Round($rSar - [double]$real.start_sar, 2)
 $rHold = if ($real.position) { "$($real.position.ticker) $($real.position.shares) sh @ `$$($real.position.entry_price)" } else { "all cash" }
 $rPend = @($real.pending).Count
-$realLine = "YOUR ACCOUNT: SAR $rSar ($(if ($rChg -ge 0) { '+' })$rChg since start) | $rHold" +
-            $(if ($rPend) { " | $rPend alert(s) waiting for your reply" } else { "" })
+$realLine = if (Test-RealTestMode -Cfg $cfg) { "TEST MODE (no real money yet)" } else { "YOUR ACCOUNT: SAR $rSar ($(if ($rChg -ge 0) { '+' })$rChg since start) | $rHold" +
+            $(if ($rPend) { " | $rPend alert(s) waiting for your reply" } else { "" }) }
 
 Add-OutboxEvent -Id $summaryId -Title "Daily summary - $sessionLabel session" `
     -Message "$realLine || $practice" | Out-Null

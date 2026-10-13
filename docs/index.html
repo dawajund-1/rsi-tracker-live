@@ -532,6 +532,13 @@ function initCalculator() {
 }
 
 function renderReal(snapshot) {
+  if (snapshot.config && snapshot.config.real_mode === "test") {
+    document.getElementById("real-value").textContent = "TEST MODE";
+    document.getElementById("real-pos").textContent = "—";
+    document.getElementById("real-pending").textContent =
+      "Test mode: no real money yet. The 22:30 alerts follow the practice account below.";
+    return;
+  }
   const r = snapshot.real_account;
   if (!r) { document.getElementById("real-pending").textContent = "No real trades recorded yet."; return; }
   const rate = 3.75;

@@ -19,6 +19,23 @@
 $RealStatePath  = Join-Path $DataDir "real_state.json"
 $RealTradesPath = Join-Path $DataDir "real_trades.csv"
 
+function Test-RealTestMode {
+    # real_account.mode = "test": nothing real yet. Alerts follow the practice
+    # account, are labelled TEST MODE and ask for no reply; no pending alerts.
+    param($Cfg)
+    return ($Cfg.real_account -and "$($Cfg.real_account.mode)" -eq "test")
+}
+
+function Get-PracticeAsAccount {
+    # The practice account in the shape the alert code expects.
+    param($State)
+    $pos = $State.open_position
+    return [pscustomobject]@{
+        cash_usd = $(if ($pos) { 0.0 } else { [double]$State.portfolio.balance_usd })
+        position = $pos
+    }
+}
+
 function New-RealState {
     param($Cfg)
     $start = if ($Cfg.real_account -and $Cfg.real_account.starting_sar) { [double]$Cfg.real_account.starting_sar } else { 500.0 }

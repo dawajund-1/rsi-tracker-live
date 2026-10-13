@@ -69,21 +69,25 @@ function Get-RiyadhClock {
 function Get-RealAlertText {
     # The message body for one REAL-account action, sized to the owner's balance.
     param([string]$Action, [string]$Ticker, [double]$Price, [double]$Rsi, $Real, $Cfg, [string]$When,
-          [double]$Cash = -1)
+          [double]$Cash = -1, [switch]$TestMode)
+    $who  = if ($TestMode) { "the practice account's" } else { "your" }
+    $tail = if ($TestMode) { " TEST MODE - practice money only, no reply needed." }
     $sarRate = [double]$Cfg.sar_per_usd
     if ($Action -eq "SELL") {
         $pos = $Real.position
         $pl  = ($Price - [double]$pos.entry_price) * [double]$pos.shares
-        return ("Sell your $($pos.shares) shares of $Ticker $When. Price now `$$([math]::Round($Price,2)), " +
+        return ("Sell $who $($pos.shares) shares of $Ticker $When. Price now `$$([math]::Round($Price,2)), " +
                 "bought @ `$$($pos.entry_price): P/L about `$$([math]::Round($pl,2)) (SAR $([math]::Round($pl*$sarRate,2))). " +
-                "RSI $([math]::Round($Rsi,1)) (sell level $($Cfg.live.rsi_exit_above)). Reply 'done' or 'sold <price>' when sold, or 'skip'.")
+                "RSI $([math]::Round($Rsi,1)) (sell level $($Cfg.live.rsi_exit_above))." +
+                $(if ($TestMode) { $tail } else { " Reply 'done' or 'sold <price>' when sold, or 'skip'." }))
     }
     # $Cash: what will be available once any same-evening SELL is done.
     $cash = if ($Cash -ge 0) { $Cash } else { [double]$Real.cash_usd }
     $shares = if ($Price -gt 0) { [math]::Round($cash / $Price, 4) } else { 0 }
-    return ("Buy $Ticker $When. Price now `$$([math]::Round($Price,2)). Your money `$$([math]::Round($cash,2)) " +
+    return ("Buy $Ticker $When. Price now `$$([math]::Round($Price,2)). $(if ($TestMode) { "Practice money" } else { "Your money" }) `$$([math]::Round($cash,2)) " +
             "(SAR $([math]::Round($cash*$sarRate,2))) = about $shares shares. " +
-            "RSI $([math]::Round($Rsi,1)) (buy level $($Cfg.live.rsi_buy_below)). Reply 'done' or 'bought <price>' when bought, or 'skip'.")
+            "RSI $([math]::Round($Rsi,1)) (buy level $($Cfg.live.rsi_buy_below))." +
+            $(if ($TestMode) { $tail } else { " Reply 'done' or 'bought <price>' when bought, or 'skip'." }))
 }
 
 function Get-LiveMarket {
@@ -140,7 +144,8 @@ function Invoke-PreClosePreview {
     if ($rsi.Count -eq 0) { Write-Host "preclose: no bar for today ($todayId); market closed or data missing."; return }
     Write-LiveSnapshot -Cfg $Cfg -State $State -Rsi $rsi -Px $px
 
-    $real = Read-RealState -Cfg $Cfg
+    $test = Test-RealTestMode -Cfg $Cfg
+    $real = if ($test) { Get-PracticeAsAccount -State $State } else { Read-RealState -Cfg $Cfg }
     $held = if ($real.position) { [string]$real.position.ticker } else { $null }
     $d = Get-PreCloseDecision -HeldTicker $held -Rsi $rsi -Watchlist @($Cfg.watchlist) `
             -BuyBelow ([double]$live.rsi_buy_below) -ExitAbove ([double]$live.rsi_exit_above)
@@ -155,11 +160,12 @@ function Invoke-PreClosePreview {
     foreach ($a in @(@("SELL", $d.Sell), @("BUY", $d.Buy))) {
         $act, $t = $a
         if (-not $t) { continue }
-        Add-OutboxEvent -Id "PRECLOSE:${act}:${t}:${todayId}" -Title "$act signal: $t" `
-            -Message (Get-RealAlertText -Action $act -Ticker $t -Price $px[$t] -Rsi $rsi[$t] -Real $real -Cfg $Cfg -When $when -Cash $cashAfter) | Out-Null
-        Add-RealPending -State $real -Action $act -Ticker $t -Price $px[$t] -BarId $todayId
+        $title = if ($test) { "TEST $act signal: $t" } else { "$act signal: $t" }
+        Add-OutboxEvent -Id "PRECLOSE:${act}:${t}:${todayId}" -Title $title `
+            -Message (Get-RealAlertText -Action $act -Ticker $t -Price $px[$t] -Rsi $rsi[$t] -Real $real -Cfg $Cfg -When $when -Cash $cashAfter -TestMode:$test) | Out-Null
+        if (-not $test) { Add-RealPending -State $real -Action $act -Ticker $t -Price $px[$t] -BarId $todayId }
     }
-    Save-RealState $real
+    if (-not $test) { Save-RealState $real }
 
     if (Publish-DataCommit "Pre-close alert $todayId") { Invoke-OutboxDrain -Cfg $Cfg }
     else { Write-Warning "preclose: data commit did not land; alert left undelivered on purpose." }
