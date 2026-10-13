@@ -1,12 +1,12 @@
 {
-  "generated_at_utc": "2026-10-13T18:46:42Z",
+  "generated_at_utc": "2026-10-13T19:29:02Z",
   "prices_live": true,
   "tickers": [
     {
       "ticker": "AAPL",
       "strategy": "rsi_revert",
-      "price": 342.4158,
-      "rsi": 81.56,
+      "price": 341.81,
+      "rsi": 79.18,
       "ema9": null,
       "ema21": null,
       "trend": "FLAT",
@@ -16,8 +16,8 @@
     {
       "ticker": "MSFT",
       "strategy": "rsi_revert",
-      "price": 545.73,
-      "rsi": 92.49,
+      "price": 545.955,
+      "rsi": 92.63,
       "ema9": null,
       "ema21": null,
       "trend": "FLAT",
@@ -27,19 +27,19 @@
     {
       "ticker": "NVDA",
       "strategy": "rsi_revert",
-      "price": 226.945,
-      "rsi": 21.36,
+      "price": 227.81,
+      "rsi": 36.88,
       "ema9": null,
       "ema21": null,
       "trend": "FLAT",
-      "signal": "BUY ZONE",
+      "signal": "NONE",
       "early_warning": "NONE"
     },
     {
       "ticker": "TSLA",
       "strategy": "rsi_revert",
-      "price": 373.57,
-      "rsi": 23.43,
+      "price": 374.65,
+      "rsi": 26.4,
       "ema9": null,
       "ema21": null,
       "trend": "FLAT",
@@ -49,8 +49,8 @@
     {
       "ticker": "AMZN",
       "strategy": "rsi_revert",
-      "price": 259.04,
-      "rsi": 48.3,
+      "price": 259.15,
+      "rsi": 49.34,
       "ema9": null,
       "ema21": null,
       "trend": "FLAT",
@@ -60,8 +60,8 @@
     {
       "ticker": "GOOGL",
       "strategy": "rsi_revert",
-      "price": 353.75,
-      "rsi": 89.97,
+      "price": 354.67,
+      "rsi": 92.31,
       "ema9": null,
       "ema21": null,
       "trend": "FLAT",
@@ -71,8 +71,8 @@
     {
       "ticker": "META",
       "strategy": "rsi_revert",
-      "price": 762.93,
-      "rsi": 94.59,
+      "price": 765.16,
+      "rsi": 94.92,
       "ema9": null,
       "ema21": null,
       "trend": "FLAT",
@@ -82,12 +82,12 @@
     {
       "ticker": "AMD",
       "strategy": "rsi_revert",
-      "price": 595.95,
-      "rsi": 15.27,
+      "price": 599.68,
+      "rsi": 31.35,
       "ema9": null,
       "ema21": null,
       "trend": "FLAT",
-      "signal": "BUY ZONE",
+      "signal": "NONE",
       "early_warning": "NONE"
     }
   ],

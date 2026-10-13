@@ -20,5 +20,16 @@
     "claimed_utc": "2026-10-13T10:51:12Z",
     "sent_utc": "2026-10-13T10:51:13Z",
     "last_error": null
+  },
+  {
+    "id": "PRECLOSE:BUY:TSLA:2026-10-13",
+    "title": "TEST BUY signal: TSLA",
+    "message": "Buy TSLA before the close at 23:00 Riyadh time. Price now $374.65. Practice money $266.67 (SAR 1000) = about 0.7118 shares. RSI 26.4 (buy level 30). TEST MODE - practice money only, no reply needed.",
+    "status": "pending",
+    "attempts": 0,
+    "created_utc": "2026-10-13T19:29:02Z",
+    "claimed_utc": null,
+    "sent_utc": null,
+    "last_error": null
   }
 ]
