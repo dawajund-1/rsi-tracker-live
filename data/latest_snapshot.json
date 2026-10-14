@@ -1,12 +1,12 @@
 {
-  "generated_at_utc": "2026-10-14T15:46:51Z",
+  "generated_at_utc": "2026-10-14T16:46:12Z",
   "prices_live": true,
   "tickers": [
     {
       "ticker": "AAPL",
       "strategy": "rsi_revert",
-      "price": 345.53,
-      "rsi": 92.28,
+      "price": 344.37,
+      "rsi": 90.56,
       "ema9": null,
       "ema21": null,
       "trend": "FLAT",
@@ -16,8 +16,8 @@
     {
       "ticker": "MSFT",
       "strategy": "rsi_revert",
-      "price": 537.4,
-      "rsi": 40.32,
+      "price": 537.0,
+      "rsi": 38.89,
       "ema9": null,
       "ema21": null,
       "trend": "FLAT",
@@ -27,8 +27,8 @@
     {
       "ticker": "NVDA",
       "strategy": "rsi_revert",
-      "price": 222.43,
-      "rsi": 13.47,
+      "price": 222.2346,
+      "rsi": 13.17,
       "ema9": null,
       "ema21": null,
       "trend": "FLAT",
@@ -38,8 +38,8 @@
     {
       "ticker": "TSLA",
       "strategy": "rsi_revert",
-      "price": 366.7567,
-      "rsi": 9.03,
+      "price": 366.43,
+      "rsi": 8.8,
       "ema9": null,
       "ema21": null,
       "trend": "LONG",
@@ -49,8 +49,8 @@
     {
       "ticker": "AMZN",
       "strategy": "rsi_revert",
-      "price": 255.63,
-      "rsi": 21.69,
+      "price": 254.84,
+      "rsi": 19.08,
       "ema9": null,
       "ema21": null,
       "trend": "FLAT",
@@ -60,8 +60,8 @@
     {
       "ticker": "GOOGL",
       "strategy": "rsi_revert",
-      "price": 352.74,
-      "rsi": 53.5,
+      "price": 351.4,
+      "rsi": 35.13,
       "ema9": null,
       "ema21": null,
       "trend": "FLAT",
@@ -71,8 +71,8 @@
     {
       "ticker": "META",
       "strategy": "rsi_revert",
-      "price": 739.595,
-      "rsi": 40.13,
+      "price": 739.16,
+      "rsi": 39.7,
       "ema9": null,
       "ema21": null,
       "trend": "FLAT",
@@ -82,8 +82,8 @@
     {
       "ticker": "AMD",
       "strategy": "rsi_revert",
-      "price": 578.23,
-      "rsi": 15.0,
+      "price": 571.995,
+      "rsi": 12.98,
       "ema9": null,
       "ema21": null,
       "trend": "FLAT",
