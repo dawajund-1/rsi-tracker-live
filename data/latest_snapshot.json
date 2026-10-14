@@ -1,12 +1,12 @@
 {
-  "generated_at_utc": "2026-10-14T17:46:31Z",
+  "generated_at_utc": "2026-10-14T17:55:01Z",
   "prices_live": true,
   "tickers": [
     {
       "ticker": "AAPL",
       "strategy": "rsi_revert",
-      "price": 342.2399,
-      "rsi": 83.96,
+      "price": 342.06,
+      "rsi": 82.95,
       "ema9": null,
       "ema21": null,
       "trend": "FLAT",
@@ -16,8 +16,8 @@
     {
       "ticker": "MSFT",
       "strategy": "rsi_revert",
-      "price": 535.09,
-      "rsi": 33.26,
+      "price": 535.35,
+      "rsi": 33.93,
       "ema9": null,
       "ema21": null,
       "trend": "FLAT",
@@ -27,8 +27,8 @@
     {
       "ticker": "NVDA",
       "strategy": "rsi_revert",
-      "price": 221.2,
-      "rsi": 11.79,
+      "price": 220.71,
+      "rsi": 11.23,
       "ema9": null,
       "ema21": null,
       "trend": "FLAT",
@@ -38,8 +38,8 @@
     {
       "ticker": "TSLA",
       "strategy": "rsi_revert",
-      "price": 365.28,
-      "rsi": 8.07,
+      "price": 365.36,
+      "rsi": 8.12,
       "ema9": null,
       "ema21": null,
       "trend": "LONG",
@@ -49,8 +49,8 @@
     {
       "ticker": "AMZN",
       "strategy": "rsi_revert",
-      "price": 253.69,
-      "rsi": 16.23,
+      "price": 253.68,
+      "rsi": 16.21,
       "ema9": null,
       "ema21": null,
       "trend": "FLAT",
@@ -60,8 +60,8 @@
     {
       "ticker": "GOOGL",
       "strategy": "rsi_revert",
-      "price": 348.13,
-      "rsi": 19.11,
+      "price": 348.415,
+      "rsi": 19.9,
       "ema9": null,
       "ema21": null,
       "trend": "FLAT",
@@ -71,8 +71,8 @@
     {
       "ticker": "META",
       "strategy": "rsi_revert",
-      "price": 736.1,
-      "rsi": 36.89,
+      "price": 736.54,
+      "rsi": 37.27,
       "ema9": null,
       "ema21": null,
       "trend": "FLAT",
@@ -82,8 +82,8 @@
     {
       "ticker": "AMD",
       "strategy": "rsi_revert",
-      "price": 572.04,
-      "rsi": 12.99,
+      "price": 570.405,
+      "rsi": 12.54,
       "ema9": null,
       "ema21": null,
       "trend": "FLAT",
