@@ -1,14 +1,11 @@
 name: Live refresh (dashboard)
 
 # Live prices + RSI for the dashboard during US market hours, and the owner's
-# ntfy replies. No trading decision, no BUY/SELL alert. Started on time by a
-# scheduled task each hour; this cron is a backup (GitHub may run it late).
-# 13:07-21:37 UTC covers the session in both summer and winter.
+# ntfy replies. No trading decision, no BUY/SELL alert. Started hourly by
+# daily-cycle.yml; does nothing when the US market is closed.
 
 on:
-  schedule:
-    - cron: "7,37 13-21 * * 1-5"
-  workflow_dispatch: {}
+  workflow_dispatch: {}   # started hourly by daily-cycle.yml
 
 permissions:
   contents: write
