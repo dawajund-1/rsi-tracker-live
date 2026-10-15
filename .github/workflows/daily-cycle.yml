@@ -15,7 +15,12 @@ on:
   schedule:
     - cron: "0 15 * * 1-5"
     - cron: "30 16 * * 1-5"
-  workflow_dispatch: {}
+  workflow_dispatch:
+    inputs:
+      smoke:
+        description: "Test only: dispatch refresh.yml once and stop"
+        type: boolean
+        default: false
 
 permissions:
   actions: write
@@ -37,6 +42,7 @@ jobs:
       - name: Run the day on New York time
         run: |
           set -u
+          if [ "${{ inputs.smoke || false }}" = "true" ]; then gh workflow run refresh.yml --ref main && echo "smoke: dispatched refresh.yml"; exit 0; fi
           today=$(TZ=America/New_York date +%F)
           [ "$(TZ=America/New_York date +%u)" -ge 6 ] && { echo "Weekend - nothing to do."; exit 0; }
           git fetch -q origin main && git checkout -q FETCH_HEAD -- data/outbox.json || true
