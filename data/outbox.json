@@ -47,11 +47,11 @@
     "id": "SUMMARY-SESSION:2026-10-14",
     "title": "Daily summary - Wed 14 Oct session",
     "message": "TEST MODE (no real money yet) || PRACTICE: no trades | balance SAR 1000 | holding: TSLA @ $375.23",
-    "status": "sending",
+    "status": "sent",
     "attempts": 1,
     "created_utc": "2026-10-15T00:07:59Z",
     "claimed_utc": "2026-10-15T00:08:01Z",
-    "sent_utc": null,
+    "sent_utc": "2026-10-15T00:08:03Z",
     "last_error": null
   }
 ]
