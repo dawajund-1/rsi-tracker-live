@@ -86,5 +86,27 @@
     "claimed_utc": "2026-10-19T20:20:15Z",
     "sent_utc": "2026-10-19T20:20:17Z",
     "last_error": null
+  },
+  {
+    "id": "PRECLOSE:SELL:TSLA:2026-10-20",
+    "title": "TEST SELL signal: TSLA",
+    "message": "Sell the practice account's 0.710675 shares of TSLA before the close at 23:00 Riyadh time. Price now $374.88, bought @ $375.23: P/L about $-0.25 (SAR -0.93). RSI 80.9 (sell level 70). TEST MODE - practice money only, no reply needed.",
+    "status": "pending",
+    "attempts": 0,
+    "created_utc": "2026-10-20T19:28:16Z",
+    "claimed_utc": null,
+    "sent_utc": null,
+    "last_error": null
+  },
+  {
+    "id": "PRECLOSE:BUY:AAPL:2026-10-20",
+    "title": "TEST BUY signal: AAPL",
+    "message": "Buy AAPL before the close at 23:00 Riyadh time. Price now $339.31. Practice money $266.42 (SAR 999.07) = about 0.7852 shares. RSI 12.4 (buy level 30). TEST MODE - practice money only, no reply needed.",
+    "status": "pending",
+    "attempts": 0,
+    "created_utc": "2026-10-20T19:28:16Z",
+    "claimed_utc": null,
+    "sent_utc": null,
+    "last_error": null
   }
 ]
