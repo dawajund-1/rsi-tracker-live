@@ -108,5 +108,16 @@
     "claimed_utc": "2026-10-20T19:28:17Z",
     "sent_utc": "2026-10-20T19:28:19Z",
     "last_error": null
+  },
+  {
+    "id": "SUMMARY-SESSION:2026-10-20",
+    "title": "Daily summary - Tue 20 Oct session",
+    "message": "TEST MODE (no real money yet) || PRACTICE: sold TSLA @ $373.71 (P/L $-1.08), bought AAPL @ $339.5 | balance SAR 995.95 | holding: AAPL @ $339.5",
+    "status": "pending",
+    "attempts": 0,
+    "created_utc": "2026-10-20T20:15:48Z",
+    "claimed_utc": null,
+    "sent_utc": null,
+    "last_error": null
   }
 ]
