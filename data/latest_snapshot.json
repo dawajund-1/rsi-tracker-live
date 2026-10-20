@@ -1,23 +1,23 @@
 {
-  "generated_at_utc": "2026-10-20T19:28:16Z",
-  "prices_live": true,
+  "generated_at_utc": "2026-10-20T20:15:17Z",
+  "prices_live": false,
   "tickers": [
     {
       "ticker": "AAPL",
       "strategy": "rsi_revert",
-      "price": 339.31,
-      "rsi": 12.36,
+      "price": 339.5,
+      "rsi": 12.9,
       "ema9": null,
       "ema21": null,
       "trend": "FLAT",
-      "signal": "BUY ZONE",
+      "signal": "BUY",
       "early_warning": "NONE"
     },
     {
       "ticker": "MSFT",
       "strategy": "rsi_revert",
-      "price": 530.5001,
-      "rsi": 34.04,
+      "price": 531.87,
+      "rsi": 39.79,
       "ema9": null,
       "ema21": null,
       "trend": "FLAT",
@@ -27,8 +27,8 @@
     {
       "ticker": "NVDA",
       "strategy": "rsi_revert",
-      "price": 216.45,
-      "rsi": 38.68,
+      "price": 216.47,
+      "rsi": 38.87,
       "ema9": null,
       "ema21": null,
       "trend": "FLAT",
@@ -38,70 +38,70 @@
     {
       "ticker": "TSLA",
       "strategy": "rsi_revert",
-      "price": 374.88,
-      "rsi": 80.9,
+      "price": 373.71,
+      "rsi": 79.46,
       "ema9": null,
       "ema21": null,
       "trend": "LONG",
-      "signal": "SELL ZONE",
+      "signal": "SELL",
       "early_warning": "NONE"
     },
     {
       "ticker": "AMZN",
       "strategy": "rsi_revert",
-      "price": 262.47,
-      "rsi": 80.33,
-      "ema9": null,
-      "ema21": null,
-      "trend": "FLAT",
-      "signal": "SELL ZONE",
-      "early_warning": "NONE"
-    },
-    {
-      "ticker": "GOOGL",
-      "strategy": "rsi_revert",
-      "price": 338.975,
-      "rsi": 21.13,
-      "ema9": null,
-      "ema21": null,
-      "trend": "FLAT",
-      "signal": "BUY ZONE",
-      "early_warning": "NONE"
-    },
-    {
-      "ticker": "META",
-      "strategy": "rsi_revert",
-      "price": 688.99,
-      "rsi": 3.57,
-      "ema9": null,
-      "ema21": null,
-      "trend": "FLAT",
-      "signal": "BUY ZONE",
-      "early_warning": "NONE"
-    },
-    {
-      "ticker": "AMD",
-      "strategy": "rsi_revert",
-      "price": 538.71,
-      "rsi": 32.08,
+      "price": 262.63,
+      "rsi": 80.71,
       "ema9": null,
       "ema21": null,
       "trend": "FLAT",
       "signal": "NONE",
       "early_warning": "NONE"
+    },
+    {
+      "ticker": "GOOGL",
+      "strategy": "rsi_revert",
+      "price": 340.275,
+      "rsi": 24.35,
+      "ema9": null,
+      "ema21": null,
+      "trend": "FLAT",
+      "signal": "BUY",
+      "early_warning": "NONE"
+    },
+    {
+      "ticker": "META",
+      "strategy": "rsi_revert",
+      "price": 694.25,
+      "rsi": 4.4,
+      "ema9": null,
+      "ema21": null,
+      "trend": "FLAT",
+      "signal": "BUY",
+      "early_warning": "NONE"
+    },
+    {
+      "ticker": "AMD",
+      "strategy": "rsi_revert",
+      "price": 534.74,
+      "rsi": 24.67,
+      "ema9": null,
+      "ema21": null,
+      "trend": "FLAT",
+      "signal": "BUY",
+      "early_warning": "NONE"
     }
   ],
   "open_position": {
-    "ticker": "TSLA",
-    "entry_price": 375.23,
-    "entry_time": "2026-10-13T20:16:56Z",
-    "shares": 0.710675
+    "ticker": "AAPL",
+    "entry_price": 339.5,
+    "entry_time": "2026-10-20T20:15:16Z",
+    "shares": 0.782287
   },
   "portfolio": {
-    "balance_usd": 266.6667,
-    "balance_sar": 1000.0,
-    "realized_pl_usd": 0,
-    "purified_total_usd": 0
+    "balance_usd": 265.5865,
+    "balance_sar": 995.95,
+    "realized_pl_usd": -1.0802,
+    "purified_total_usd": 0.0
   },
   "real_account": {
     "start_sar": 500.0,
@@ -129,12 +129,16 @@
     "pl_provisional": false,
     "provisional_reason": "",
     "bar_guard": {
-      "bar_id": "2026-10-16",
+      "bar_id": "2026-10-20",
       "decided": true,
-      "exit_done": false,
-      "entry_done": false,
-      "closed": [],
-      "opened": []
+      "exit_done": true,
+      "entry_done": true,
+      "closed": [
+        "TSLA"
+      ],
+      "opened": [
+        "AAPL"
+      ]
     },
     "outbox_pending": 0,
     "outbox_needs_review": 0

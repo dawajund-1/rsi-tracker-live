@@ -1,24 +1,24 @@
 {
   "ticker_state": {
-    "AAPL": "FLAT",
+    "AAPL": "LONG",
     "MSFT": "FLAT",
     "NVDA": "FLAT",
-    "TSLA": "LONG",
+    "TSLA": "FLAT",
     "AMZN": "FLAT",
     "GOOGL": "FLAT",
     "META": "FLAT",
     "AMD": "FLAT"
   },
   "open_position": {
-    "ticker": "TSLA",
-    "entry_price": 375.23,
-    "entry_time": "2026-10-13T20:16:56Z",
-    "shares": 0.710675
+    "ticker": "AAPL",
+    "entry_price": 339.5,
+    "entry_time": "2026-10-20T20:15:16Z",
+    "shares": 0.782287
   },
   "portfolio": {
-    "balance_usd": 266.6667,
-    "realized_pl_usd": 0,
-    "purified_total_usd": 0
+    "balance_usd": 265.5865,
+    "realized_pl_usd": -1.0802,
+    "purified_total_usd": 0.0
   },
   "warning_state": {
     "AAPL": "NONE",
@@ -31,11 +31,15 @@
     "AMD": "NONE"
   },
   "bar_guard": {
-    "bar_id": "2026-10-16",
+    "bar_id": "2026-10-20",
     "decided": true,
-    "exit_done": false,
-    "entry_done": false,
-    "closed": [],
-    "opened": []
+    "exit_done": true,
+    "entry_done": true,
+    "closed": [
+      "TSLA"
+    ],
+    "opened": [
+      "AAPL"
+    ]
   }
 }
