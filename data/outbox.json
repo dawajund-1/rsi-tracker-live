@@ -124,10 +124,10 @@
     "id": "PRECLOSE:SELL:AAPL:2026-10-21",
     "title": "TEST SELL signal: AAPL",
     "message": "Sell the practice account's 0.782287 shares of AAPL before the close at 23:00 Riyadh time. Price now $344.13, bought @ $339.5: P/L about $3.62 (SAR 13.58). RSI 71.9 (sell level 70). TEST MODE - practice money only, no reply needed.",
-    "status": "pending",
-    "attempts": 0,
+    "status": "sending",
+    "attempts": 1,
     "created_utc": "2026-10-21T19:28:14Z",
-    "claimed_utc": null,
+    "claimed_utc": "2026-10-21T19:28:16Z",
     "sent_utc": null,
     "last_error": null
   },
@@ -135,10 +135,10 @@
     "id": "PRECLOSE:BUY:GOOGL:2026-10-21",
     "title": "TEST BUY signal: GOOGL",
     "message": "Buy GOOGL before the close at 23:00 Riyadh time. Price now $334.27. Practice money $269.21 (SAR 1009.53) = about 0.8054 shares. RSI 10.1 (buy level 30). TEST MODE - practice money only, no reply needed.",
-    "status": "pending",
-    "attempts": 0,
+    "status": "sending",
+    "attempts": 1,
     "created_utc": "2026-10-21T19:28:14Z",
-    "claimed_utc": null,
+    "claimed_utc": "2026-10-21T19:28:16Z",
     "sent_utc": null,
     "last_error": null
   }
