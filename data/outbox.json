@@ -146,11 +146,11 @@
     "id": "SUMMARY-SESSION:2026-10-21",
     "title": "Daily summary - Wed 21 Oct session",
     "message": "TEST MODE (no real money yet) || PRACTICE: sold AAPL @ $343.99 (P/L $3.51), bought GOOGL @ $334.76 | balance SAR 1007.8 | holding: GOOGL @ $334.76",
-    "status": "sending",
+    "status": "sent",
     "attempts": 1,
     "created_utc": "2026-10-21T20:15:46Z",
     "claimed_utc": "2026-10-21T20:15:47Z",
-    "sent_utc": null,
+    "sent_utc": "2026-10-21T20:15:49Z",
     "last_error": null
   }
 ]
