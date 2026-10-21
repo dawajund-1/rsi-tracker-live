@@ -1,23 +1,23 @@
 {
-  "generated_at_utc": "2026-10-21T19:28:14Z",
-  "prices_live": true,
+  "generated_at_utc": "2026-10-21T20:15:19Z",
+  "prices_live": false,
   "tickers": [
     {
       "ticker": "AAPL",
       "strategy": "rsi_revert",
-      "price": 344.13,
-      "rsi": 71.85,
+      "price": 343.99,
+      "rsi": 71.27,
       "ema9": null,
       "ema21": null,
       "trend": "LONG",
-      "signal": "SELL ZONE",
+      "signal": "SELL",
       "early_warning": "NONE"
     },
     {
       "ticker": "MSFT",
       "strategy": "rsi_revert",
-      "price": 532.37,
-      "rsi": 46.39,
+      "price": 532.95,
+      "rsi": 52.45,
       "ema9": null,
       "ema21": null,
       "trend": "FLAT",
@@ -27,52 +27,8 @@
     {
       "ticker": "NVDA",
       "strategy": "rsi_revert",
-      "price": 221.265,
-      "rsi": 82.03,
-      "ema9": null,
-      "ema21": null,
-      "trend": "FLAT",
-      "signal": "SELL ZONE",
-      "early_warning": "NONE"
-    },
-    {
-      "ticker": "TSLA",
-      "strategy": "rsi_revert",
-      "price": 386.95,
-      "rsi": 92.39,
-      "ema9": null,
-      "ema21": null,
-      "trend": "FLAT",
-      "signal": "SELL ZONE",
-      "early_warning": "NONE"
-    },
-    {
-      "ticker": "AMZN",
-      "strategy": "rsi_revert",
-      "price": 262.775,
-      "rsi": 81.38,
-      "ema9": null,
-      "ema21": null,
-      "trend": "FLAT",
-      "signal": "SELL ZONE",
-      "early_warning": "NONE"
-    },
-    {
-      "ticker": "GOOGL",
-      "strategy": "rsi_revert",
-      "price": 334.2651,
-      "rsi": 10.11,
-      "ema9": null,
-      "ema21": null,
-      "trend": "FLAT",
-      "signal": "BUY ZONE",
-      "early_warning": "NONE"
-    },
-    {
-      "ticker": "META",
-      "strategy": "rsi_revert",
-      "price": 704.58,
-      "rsi": 49.95,
+      "price": 221.97,
+      "rsi": 83.72,
       "ema9": null,
       "ema21": null,
       "trend": "FLAT",
@@ -80,28 +36,72 @@
       "early_warning": "NONE"
     },
     {
-      "ticker": "AMD",
+      "ticker": "TSLA",
       "strategy": "rsi_revert",
-      "price": 555.27,
-      "rsi": 75.02,
+      "price": 386.47,
+      "rsi": 92.21,
       "ema9": null,
       "ema21": null,
       "trend": "FLAT",
-      "signal": "SELL ZONE",
+      "signal": "NONE",
+      "early_warning": "NONE"
+    },
+    {
+      "ticker": "AMZN",
+      "strategy": "rsi_revert",
+      "price": 262.37,
+      "rsi": 75.87,
+      "ema9": null,
+      "ema21": null,
+      "trend": "FLAT",
+      "signal": "NONE",
+      "early_warning": "NONE"
+    },
+    {
+      "ticker": "GOOGL",
+      "strategy": "rsi_revert",
+      "price": 334.76,
+      "rsi": 10.62,
+      "ema9": null,
+      "ema21": null,
+      "trend": "FLAT",
+      "signal": "BUY",
+      "early_warning": "NONE"
+    },
+    {
+      "ticker": "META",
+      "strategy": "rsi_revert",
+      "price": 697.52,
+      "rsi": 25.78,
+      "ema9": null,
+      "ema21": null,
+      "trend": "FLAT",
+      "signal": "BUY",
+      "early_warning": "NONE"
+    },
+    {
+      "ticker": "AMD",
+      "strategy": "rsi_revert",
+      "price": 552.72,
+      "rsi": 72.76,
+      "ema9": null,
+      "ema21": null,
+      "trend": "FLAT",
+      "signal": "NONE",
       "early_warning": "NONE"
     }
   ],
   "open_position": {
-    "ticker": "AAPL",
-    "entry_price": 339.5,
-    "entry_time": "2026-10-20T20:15:16Z",
-    "shares": 0.782287
+    "ticker": "GOOGL",
+    "entry_price": 334.76,
+    "entry_time": "2026-10-21T20:15:16Z",
+    "shares": 0.802807
   },
   "portfolio": {
-    "balance_usd": 265.5865,
-    "balance_sar": 995.95,
-    "realized_pl_usd": -1.0802,
-    "purified_total_usd": 0.0
+    "balance_usd": 268.7477,
+    "balance_sar": 1007.8,
+    "realized_pl_usd": 2.4323,
+    "purified_total_usd": 0.3513
   },
   "real_account": {
     "start_sar": 500.0,
@@ -129,12 +129,16 @@
     "pl_provisional": false,
     "provisional_reason": "",
     "bar_guard": {
-      "bar_id": "2026-10-19",
+      "bar_id": "2026-10-21",
       "decided": true,
-      "exit_done": false,
-      "entry_done": false,
-      "closed": [],
-      "opened": []
+      "exit_done": true,
+      "entry_done": true,
+      "closed": [
+        "AAPL"
+      ],
+      "opened": [
+        "GOOGL"
+      ]
     },
     "outbox_pending": 0,
     "outbox_needs_review": 0

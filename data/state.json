@@ -1,24 +1,24 @@
 {
   "ticker_state": {
-    "AAPL": "LONG",
+    "AAPL": "FLAT",
     "MSFT": "FLAT",
     "NVDA": "FLAT",
     "TSLA": "FLAT",
     "AMZN": "FLAT",
-    "GOOGL": "FLAT",
+    "GOOGL": "LONG",
     "META": "FLAT",
     "AMD": "FLAT"
   },
   "open_position": {
-    "ticker": "AAPL",
-    "entry_price": 339.5,
-    "entry_time": "2026-10-20T20:15:16Z",
-    "shares": 0.782287
+    "ticker": "GOOGL",
+    "entry_price": 334.76,
+    "entry_time": "2026-10-21T20:15:16Z",
+    "shares": 0.802807
   },
   "portfolio": {
-    "balance_usd": 265.5865,
-    "realized_pl_usd": -1.0802,
-    "purified_total_usd": 0.0
+    "balance_usd": 268.7477,
+    "realized_pl_usd": 2.4323,
+    "purified_total_usd": 0.3513
   },
   "warning_state": {
     "AAPL": "NONE",
@@ -31,11 +31,15 @@
     "AMD": "NONE"
   },
   "bar_guard": {
-    "bar_id": "2026-10-19",
+    "bar_id": "2026-10-21",
     "decided": true,
-    "exit_done": false,
-    "entry_done": false,
-    "closed": [],
-    "opened": []
+    "exit_done": true,
+    "entry_done": true,
+    "closed": [
+      "AAPL"
+    ],
+    "opened": [
+      "GOOGL"
+    ]
   }
 }
