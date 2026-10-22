@@ -152,5 +152,16 @@
     "claimed_utc": "2026-10-21T20:15:47Z",
     "sent_utc": "2026-10-21T20:15:49Z",
     "last_error": null
+  },
+  {
+    "id": "SUMMARY-SESSION:2026-10-22",
+    "title": "Daily summary - Thu 22 Oct session",
+    "message": "TEST MODE (no real money yet) || PRACTICE: no trades | balance SAR 1007.8 | holding: GOOGL @ $334.76",
+    "status": "pending",
+    "attempts": 0,
+    "created_utc": "2026-10-22T20:15:37Z",
+    "claimed_utc": null,
+    "sent_utc": null,
+    "last_error": null
   }
 ]
