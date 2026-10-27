@@ -190,11 +190,11 @@
     "id": "SUMMARY-SESSION:2026-10-27",
     "title": "Daily summary - Tue 27 Oct session",
     "message": "TEST MODE (no real money yet) || PRACTICE: no trades | balance SAR 1007.8 | holding: GOOGL @ $334.76",
-    "status": "sending",
+    "status": "sent",
     "attempts": 1,
     "created_utc": "2026-10-27T20:15:31Z",
     "claimed_utc": "2026-10-27T20:15:33Z",
-    "sent_utc": null,
+    "sent_utc": "2026-10-27T20:15:36Z",
     "last_error": null
   }
 ]
