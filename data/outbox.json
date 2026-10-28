@@ -201,11 +201,11 @@
     "id": "SUMMARY-SESSION:2026-10-28",
     "title": "Daily summary - Wed 28 Oct session",
     "message": "TEST MODE (no real money yet) || PRACTICE: sold GOOGL @ $324.89 (P/L $-7.92), bought META @ $612.49 | balance SAR 978.09 | holding: META @ $612.49",
-    "status": "sending",
+    "status": "sent",
     "attempts": 1,
     "created_utc": "2026-10-28T20:15:37Z",
     "claimed_utc": "2026-10-28T20:15:39Z",
-    "sent_utc": null,
+    "sent_utc": "2026-10-28T20:15:40Z",
     "last_error": null
   }
 ]
