@@ -223,11 +223,11 @@
     "id": "SUMMARY-SESSION:2026-10-30",
     "title": "Daily summary - Fri 30 Oct session",
     "message": "TEST MODE (no real money yet) || PRACTICE: no trades | balance SAR 978.09 | holding: META @ $612.49",
-    "status": "sending",
+    "status": "sent",
     "attempts": 1,
     "created_utc": "2026-10-30T20:21:32Z",
     "claimed_utc": "2026-10-30T20:21:33Z",
-    "sent_utc": null,
+    "sent_utc": "2026-10-30T20:21:35Z",
     "last_error": null
   }
 ]
