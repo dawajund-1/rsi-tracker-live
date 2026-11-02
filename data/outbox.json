@@ -229,5 +229,16 @@
     "claimed_utc": "2026-10-30T20:21:33Z",
     "sent_utc": "2026-10-30T20:21:35Z",
     "last_error": null
+  },
+  {
+    "id": "SUMMARY-SESSION:2026-11-02",
+    "title": "Daily summary - Mon 2 Nov session",
+    "message": "TEST MODE (no real money yet) || PRACTICE: no trades | balance SAR 978.09 | holding: META @ $612.49",
+    "status": "pending",
+    "attempts": 0,
+    "created_utc": "2026-11-02T22:58:27Z",
+    "claimed_utc": null,
+    "sent_utc": null,
+    "last_error": null
   }
 ]
