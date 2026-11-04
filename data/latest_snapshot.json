@@ -1,34 +1,34 @@
 {
-  "generated_at_utc": "2026-11-04T01:35:58Z",
+  "generated_at_utc": "2026-11-04T21:15:12Z",
   "prices_live": false,
   "tickers": [
     {
       "ticker": "AAPL",
       "strategy": "rsi_revert",
-      "price": 338.32,
-      "rsi": 14.47,
+      "price": 349.51,
+      "rsi": 76.72,
       "ema9": null,
       "ema21": null,
       "trend": "FLAT",
-      "signal": "BUY",
+      "signal": "NONE",
       "early_warning": "NONE"
     },
     {
       "ticker": "MSFT",
       "strategy": "rsi_revert",
-      "price": 507.12,
-      "rsi": 1.61,
+      "price": 555.8,
+      "rsi": 89.64,
       "ema9": null,
       "ema21": null,
       "trend": "FLAT",
-      "signal": "BUY",
+      "signal": "NONE",
       "early_warning": "NONE"
     },
     {
       "ticker": "NVDA",
       "strategy": "rsi_revert",
-      "price": 202.06,
-      "rsi": 3.68,
+      "price": 200.13,
+      "rsi": 21.86,
       "ema9": null,
       "ema21": null,
       "trend": "FLAT",
@@ -38,19 +38,19 @@
     {
       "ticker": "TSLA",
       "strategy": "rsi_revert",
-      "price": 403.82,
-      "rsi": 69.3,
+      "price": 385.19,
+      "rsi": 7.88,
       "ema9": null,
       "ema21": null,
       "trend": "FLAT",
-      "signal": "NONE",
+      "signal": "BUY",
       "early_warning": "NONE"
     },
     {
       "ticker": "AMZN",
       "strategy": "rsi_revert",
-      "price": 245.63,
-      "rsi": 55.85,
+      "price": 266.03,
+      "rsi": 94.43,
       "ema9": null,
       "ema21": null,
       "trend": "FLAT",
@@ -60,48 +60,48 @@
     {
       "ticker": "GOOGL",
       "strategy": "rsi_revert",
-      "price": 278.99,
-      "rsi": 5.5,
+      "price": 288.93,
+      "rsi": 74.17,
       "ema9": null,
       "ema21": null,
       "trend": "FLAT",
-      "signal": "BUY",
+      "signal": "NONE",
       "early_warning": "NONE"
     },
     {
       "ticker": "META",
       "strategy": "rsi_revert",
-      "price": 606.73,
-      "rsi": 16.29,
+      "price": 630.0,
+      "rsi": 81.29,
       "ema9": null,
       "ema21": null,
       "trend": "LONG",
-      "signal": "NONE",
+      "signal": "SELL",
       "early_warning": "NONE"
     },
     {
       "ticker": "AMD",
       "strategy": "rsi_revert",
-      "price": 466.84,
-      "rsi": 6.18,
+      "price": 488.78,
+      "rsi": 44.73,
       "ema9": null,
       "ema21": null,
       "trend": "FLAT",
-      "signal": "BUY",
+      "signal": "NONE",
       "early_warning": "NONE"
     }
   ],
   "open_position": {
-    "ticker": "META",
-    "entry_price": 612.49,
-    "entry_time": "2026-10-28T20:15:11Z",
-    "shares": 0.425842
+    "ticker": "NVDA",
+    "entry_price": 200.13,
+    "entry_time": "2026-11-04T21:15:10Z",
+    "shares": 1.336806
   },
   "portfolio": {
-    "balance_usd": 260.824,
-    "balance_sar": 978.09,
-    "realized_pl_usd": -5.4914,
-    "purified_total_usd": 0.3513
+    "balance_usd": 267.5349,
+    "balance_sar": 1003.26,
+    "realized_pl_usd": 1.9651,
+    "purified_total_usd": 1.0969
   },
   "real_account": {
     "start_sar": 500.0,
@@ -129,12 +129,16 @@
     "pl_provisional": false,
     "provisional_reason": "",
     "bar_guard": {
-      "bar_id": "2026-11-02",
+      "bar_id": "2026-11-04",
       "decided": true,
-      "exit_done": false,
-      "entry_done": false,
-      "closed": [],
-      "opened": []
+      "exit_done": true,
+      "entry_done": true,
+      "closed": [
+        "META"
+      ],
+      "opened": [
+        "NVDA"
+      ]
     },
     "outbox_pending": 0,
     "outbox_needs_review": 0
