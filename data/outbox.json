@@ -256,10 +256,10 @@
     "id": "SUMMARY-SESSION:2026-11-04",
     "title": "Daily summary - Wed 4 Nov session",
     "message": "TEST MODE (no real money yet) || PRACTICE: sold META @ $630 (P/L $7.46), bought NVDA @ $200.13 | balance SAR 1003.26 | holding: NVDA @ $200.13",
-    "status": "pending",
-    "attempts": 0,
+    "status": "sending",
+    "attempts": 1,
     "created_utc": "2026-11-04T21:15:34Z",
-    "claimed_utc": null,
+    "claimed_utc": "2026-11-04T21:15:35Z",
     "sent_utc": null,
     "last_error": null
   }
