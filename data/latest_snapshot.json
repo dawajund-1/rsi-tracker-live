@@ -1,12 +1,12 @@
 {
-  "generated_at_utc": "2026-11-06T21:15:13Z",
+  "generated_at_utc": "2026-11-07T01:05:32Z",
   "prices_live": false,
   "tickers": [
     {
       "ticker": "AAPL",
       "strategy": "rsi_revert",
-      "price": 342.37,
-      "rsi": 43.53,
+      "price": 344.17,
+      "rsi": 52.71,
       "ema9": null,
       "ema21": null,
       "trend": "FLAT",
@@ -16,8 +16,8 @@
     {
       "ticker": "MSFT",
       "strategy": "rsi_revert",
-      "price": 530.61,
-      "rsi": 38.84,
+      "price": 535.93,
+      "rsi": 48.41,
       "ema9": null,
       "ema21": null,
       "trend": "FLAT",
@@ -27,8 +27,8 @@
     {
       "ticker": "NVDA",
       "strategy": "rsi_revert",
-      "price": 186.64,
-      "rsi": 33.09,
+      "price": 181.6,
+      "rsi": 4.98,
       "ema9": null,
       "ema21": null,
       "trend": "LONG",
@@ -38,19 +38,19 @@
     {
       "ticker": "TSLA",
       "strategy": "rsi_revert",
-      "price": 358.22,
-      "rsi": 37.41,
+      "price": 343.69,
+      "rsi": 1.41,
       "ema9": null,
       "ema21": null,
       "trend": "FLAT",
-      "signal": "NONE",
+      "signal": "BUY",
       "early_warning": "NONE"
     },
     {
       "ticker": "AMZN",
       "strategy": "rsi_revert",
-      "price": 259.3,
-      "rsi": 54.05,
+      "price": 260.21,
+      "rsi": 60.18,
       "ema9": null,
       "ema21": null,
       "trend": "FLAT",
@@ -60,8 +60,8 @@
     {
       "ticker": "GOOGL",
       "strategy": "rsi_revert",
-      "price": 284.78,
-      "rsi": 53.46,
+      "price": 282.57,
+      "rsi": 37.44,
       "ema9": null,
       "ema21": null,
       "trend": "FLAT",
@@ -71,23 +71,23 @@
     {
       "ticker": "META",
       "strategy": "rsi_revert",
-      "price": 610.15,
-      "rsi": 40.88,
+      "price": 605.08,
+      "rsi": 23.9,
       "ema9": null,
       "ema21": null,
       "trend": "FLAT",
-      "signal": "NONE",
+      "signal": "BUY",
       "early_warning": "NONE"
     },
     {
       "ticker": "AMD",
       "strategy": "rsi_revert",
-      "price": 449.04,
-      "rsi": 50.84,
+      "price": 404.4,
+      "rsi": 7.25,
       "ema9": null,
       "ema21": null,
       "trend": "FLAT",
-      "signal": "NONE",
+      "signal": "BUY",
       "early_warning": "NONE"
     }
   ],
@@ -129,7 +129,7 @@
     "pl_provisional": false,
     "provisional_reason": "",
     "bar_guard": {
-      "bar_id": "2026-11-06",
+      "bar_id": "2026-11-05",
       "decided": true,
       "exit_done": false,
       "entry_done": false,
