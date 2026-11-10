@@ -295,5 +295,16 @@
     "claimed_utc": "2026-11-09T23:40:46Z",
     "sent_utc": "2026-11-09T23:40:49Z",
     "last_error": null
+  },
+  {
+    "id": "SUMMARY-SESSION:2026-11-10",
+    "title": "Daily summary - Tue 10 Nov session",
+    "message": "TEST MODE (no real money yet) || PRACTICE: no trades | balance SAR 1003.26 | holding: NVDA @ $200.13",
+    "status": "pending",
+    "attempts": 0,
+    "created_utc": "2026-11-10T21:15:33Z",
+    "claimed_utc": null,
+    "sent_utc": null,
+    "last_error": null
   }
 ]
