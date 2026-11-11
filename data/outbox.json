@@ -311,11 +311,11 @@
     "id": "SUMMARY-SESSION:2026-11-11",
     "title": "Daily summary - Wed 11 Nov session",
     "message": "TEST MODE (no real money yet) || PRACTICE: no trades | balance SAR 1003.26 | holding: NVDA @ $200.13",
-    "status": "sending",
+    "status": "sent",
     "attempts": 1,
     "created_utc": "2026-11-11T21:42:01Z",
     "claimed_utc": "2026-11-11T21:42:03Z",
-    "sent_utc": null,
+    "sent_utc": "2026-11-11T21:42:04Z",
     "last_error": null
   }
 ]
