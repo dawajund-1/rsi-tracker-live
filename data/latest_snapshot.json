@@ -1,12 +1,12 @@
 {
-  "generated_at_utc": "2026-11-10T21:15:12Z",
+  "generated_at_utc": "2026-11-11T01:24:24Z",
   "prices_live": false,
   "tickers": [
     {
       "ticker": "AAPL",
       "strategy": "rsi_revert",
-      "price": 348.51,
-      "rsi": 59.22,
+      "price": 350.69,
+      "rsi": 78.37,
       "ema9": null,
       "ema21": null,
       "trend": "FLAT",
@@ -16,8 +16,8 @@
     {
       "ticker": "MSFT",
       "strategy": "rsi_revert",
-      "price": 533.16,
-      "rsi": 38.02,
+      "price": 545.18,
+      "rsi": 70.63,
       "ema9": null,
       "ema21": null,
       "trend": "FLAT",
@@ -27,8 +27,8 @@
     {
       "ticker": "NVDA",
       "strategy": "rsi_revert",
-      "price": 168.89,
-      "rsi": 7.82,
+      "price": 178.67,
+      "rsi": 17.09,
       "ema9": null,
       "ema21": null,
       "trend": "LONG",
@@ -38,8 +38,8 @@
     {
       "ticker": "TSLA",
       "strategy": "rsi_revert",
-      "price": 379.78,
-      "rsi": 71.17,
+      "price": 378.05,
+      "rsi": 68.66,
       "ema9": null,
       "ema21": null,
       "trend": "FLAT",
@@ -49,8 +49,8 @@
     {
       "ticker": "AMZN",
       "strategy": "rsi_revert",
-      "price": 270.87,
-      "rsi": 89.73,
+      "price": 266.93,
+      "rsi": 83.03,
       "ema9": null,
       "ema21": null,
       "trend": "FLAT",
@@ -60,8 +60,8 @@
     {
       "ticker": "GOOGL",
       "strategy": "rsi_revert",
-      "price": 287.38,
-      "rsi": 61.54,
+      "price": 288.15,
+      "rsi": 73.87,
       "ema9": null,
       "ema21": null,
       "trend": "FLAT",
@@ -71,8 +71,8 @@
     {
       "ticker": "META",
       "strategy": "rsi_revert",
-      "price": 641.39,
-      "rsi": 84.24,
+      "price": 641.37,
+      "rsi": 84.23,
       "ema9": null,
       "ema21": null,
       "trend": "FLAT",
@@ -82,8 +82,8 @@
     {
       "ticker": "AMD",
       "strategy": "rsi_revert",
-      "price": 515.21,
-      "rsi": 80.59,
+      "price": 508.58,
+      "rsi": 78.18,
       "ema9": null,
       "ema21": null,
       "trend": "FLAT",
@@ -129,7 +129,7 @@
     "pl_provisional": false,
     "provisional_reason": "",
     "bar_guard": {
-      "bar_id": "2026-11-10",
+      "bar_id": "2026-11-09",
       "decided": true,
       "exit_done": false,
       "entry_done": false,
