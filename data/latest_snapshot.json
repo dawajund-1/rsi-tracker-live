@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-11-19T22:32:50Z",
+  "generated_at_utc": "2026-11-20T02:30:23Z",
   "prices_live": false,
   "tickers": [
     {
@@ -71,8 +71,8 @@
     {
       "ticker": "META",
       "strategy": "rsi_revert",
-      "price": 596.22,
-      "rsi": 4.73,
+      "price": 616.38,
+      "rsi": 18.97,
       "ema9": null,
       "ema21": null,
       "trend": "FLAT",
