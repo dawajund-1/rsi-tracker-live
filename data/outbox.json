@@ -405,5 +405,16 @@
     "claimed_utc": "2026-11-24T01:59:22Z",
     "sent_utc": "2026-11-24T01:59:24Z",
     "last_error": null
+  },
+  {
+    "id": "SUMMARY-SESSION:2026-11-24",
+    "title": "Daily summary - Tue 24 Nov session",
+    "message": "TEST MODE (no real money yet) || PRACTICE: bought AMD @ $413.27 | balance SAR 827.4 | holding: AMD @ $413.27",
+    "status": "pending",
+    "attempts": 0,
+    "created_utc": "2026-11-24T23:43:45Z",
+    "claimed_utc": null,
+    "sent_utc": null,
+    "last_error": null
   }
 ]
