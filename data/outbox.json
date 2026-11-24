@@ -410,10 +410,10 @@
     "id": "SUMMARY-SESSION:2026-11-24",
     "title": "Daily summary - Tue 24 Nov session",
     "message": "TEST MODE (no real money yet) || PRACTICE: bought AMD @ $413.27 | balance SAR 827.4 | holding: AMD @ $413.27",
-    "status": "pending",
-    "attempts": 0,
+    "status": "sending",
+    "attempts": 1,
     "created_utc": "2026-11-24T23:43:45Z",
-    "claimed_utc": null,
+    "claimed_utc": "2026-11-24T23:43:47Z",
     "sent_utc": null,
     "last_error": null
   }
