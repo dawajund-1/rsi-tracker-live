@@ -1,12 +1,12 @@
 {
-  "generated_at_utc": "2026-11-25T04:30:20Z",
+  "generated_at_utc": "2026-11-25T23:27:08Z",
   "prices_live": false,
   "tickers": [
     {
       "ticker": "AAPL",
       "strategy": "rsi_revert",
-      "price": 354.07,
-      "rsi": 79.41,
+      "price": 355.58,
+      "rsi": 84.02,
       "ema9": null,
       "ema21": null,
       "trend": "FLAT",
@@ -16,8 +16,8 @@
     {
       "ticker": "MSFT",
       "strategy": "rsi_revert",
-      "price": 496.13,
-      "rsi": 59.95,
+      "price": 489.93,
+      "rsi": 30.64,
       "ema9": null,
       "ema21": null,
       "trend": "FLAT",
@@ -27,8 +27,8 @@
     {
       "ticker": "NVDA",
       "strategy": "rsi_revert",
-      "price": 155.38,
-      "rsi": 55.45,
+      "price": 149.3,
+      "rsi": 41.35,
       "ema9": null,
       "ema21": null,
       "trend": "FLAT",
@@ -38,8 +38,8 @@
     {
       "ticker": "TSLA",
       "strategy": "rsi_revert",
-      "price": 384.68,
-      "rsi": 68.35,
+      "price": 380.14,
+      "rsi": 52.24,
       "ema9": null,
       "ema21": null,
       "trend": "FLAT",
@@ -49,19 +49,19 @@
     {
       "ticker": "AMZN",
       "strategy": "rsi_revert",
-      "price": 252.29,
-      "rsi": 40.62,
+      "price": 244.43,
+      "rsi": 17.68,
       "ema9": null,
       "ema21": null,
       "trend": "FLAT",
-      "signal": "NONE",
+      "signal": "BUY",
       "early_warning": "NONE"
     },
     {
       "ticker": "GOOGL",
       "strategy": "rsi_revert",
-      "price": 279.05,
-      "rsi": 57.13,
+      "price": 273.1,
+      "rsi": 31.88,
       "ema9": null,
       "ema21": null,
       "trend": "FLAT",
@@ -71,8 +71,8 @@
     {
       "ticker": "META",
       "strategy": "rsi_revert",
-      "price": 589.82,
-      "rsi": 48.33,
+      "price": 609.89,
+      "rsi": 74.75,
       "ema9": null,
       "ema21": null,
       "trend": "FLAT",
@@ -82,8 +82,8 @@
     {
       "ticker": "AMD",
       "strategy": "rsi_revert",
-      "price": 413.27,
-      "rsi": 20.86,
+      "price": 406.03,
+      "rsi": 17.63,
       "ema9": null,
       "ema21": null,
       "trend": "LONG",
@@ -129,14 +129,12 @@
     "pl_provisional": false,
     "provisional_reason": "",
     "bar_guard": {
-      "bar_id": "2026-11-24",
+      "bar_id": "2026-11-25",
       "decided": true,
       "exit_done": false,
-      "entry_done": true,
+      "entry_done": false,
       "closed": [],
-      "opened": [
-        "AMD"
-      ]
+      "opened": []
     },
     "outbox_pending": 0,
     "outbox_needs_review": 0
