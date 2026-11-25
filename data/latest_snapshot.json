@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-11-24T23:43:28Z",
+  "generated_at_utc": "2026-11-25T04:30:20Z",
   "prices_live": false,
   "tickers": [
     {
@@ -86,8 +86,8 @@
       "rsi": 20.86,
       "ema9": null,
       "ema21": null,
-      "trend": "FLAT",
-      "signal": "BUY",
+      "trend": "LONG",
+      "signal": "NONE",
       "early_warning": "NONE"
     }
   ],
