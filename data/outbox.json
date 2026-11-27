@@ -443,11 +443,11 @@
     "id": "SUMMARY-SESSION:2026-11-27",
     "title": "Daily summary - Fri 27 Nov session",
     "message": "TEST MODE (no real money yet) || PRACTICE: no trades | balance SAR 827.4 | holding: AMD @ $413.27",
-    "status": "sending",
+    "status": "sent",
     "attempts": 1,
     "created_utc": "2026-11-27T23:10:23Z",
     "claimed_utc": "2026-11-27T23:10:24Z",
-    "sent_utc": null,
+    "sent_utc": "2026-11-27T23:10:26Z",
     "last_error": null
   }
 ]
